@@ -1,0 +1,217 @@
+body {
+  /* background-color: #252e3f; */
+  /* the images below are the same, but: blue, purple, or red */
+  /* background-image: url("./images/background_blue.jpg"); */
+  background-image: url("./images/background_purple.jpg");
+  /* background-image: url("./images/background_red.jpg"); */
+
+  background-attachment: fixed;
+}
+
+.App {
+  font-family: sans-serif;
+  text-align: center;
+  display: flex;
+}
+
+.SkillFrame-header {
+  border-style: ridge;
+  border-left-width: 6px;
+  border-right-width: 6px;
+  border-top-width: 4px;
+  border-bottom-width: 4px;
+  border-color: #dfbf98;
+  font-family: serif;
+  letter-spacing: 2px;
+  font-size: 14px;
+
+  color: #f6fcfc;
+  border-radius: 6px;
+  height: 2em;
+  overflow: hidden;
+  padding: 0px;
+  cursor: pointer;
+
+  font-family: monospace;
+  text-transform: uppercase;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+.SkillFrame {
+  padding: 0px;
+  cursor: pointer;
+  font-size: 12px;
+  height: 2em;
+  overflow: hidden;
+
+  border-left: 4px;
+  border-top: 2px;
+  border-bottom: 2px;
+  border-right: 4px;
+  border-style: outset;
+  border-radius: 6px;
+  border-color: #e0c3a0;
+  font-family: system-ui;
+  font-weight: bold;
+  color: #f6fcfc;
+  background-image: linear-gradient(#0a0e0e 2%, #212c2f 80%, #212c2f 10%);
+}
+
+.ButtonsDiv {
+  position: fixed;
+  bottom: 3vh;
+  right: 2em;
+}
+
+.CharacterPortrait {
+  background-size: 9em;
+  width: 20em;
+  height: 20em;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  left: 61vw;
+  bottom: -11em;
+  position: fixed;
+  z-index: -1;
+}
+
+.ToggleButton {
+  width: 6em;
+  height: 2em;
+}
+
+.LinkButton {
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  appearance: button;
+  text-decoration: none;
+  color: initial;
+  border: 1px solid black;
+  border-radius: 4px;
+  vertical-align: middle;
+  height: -webkit-fill-available;
+  background-color: bisque;
+}
+
+.Directions-BG {
+  position: fixed;
+  height: 80vh;
+  max-height: 80vh;
+  left: 62vw;
+  width: 36vw;
+  overflow-y: auto;
+}
+
+.Directions {
+  position: relative;
+  /*right: 5vw; */
+  /*top: 60vh; */
+  /*border: 1px solid black;*/
+  width: 100%;
+}
+
+.Directions-cell {
+  font-size: 12px;
+  cursor: pointer;
+  border-color: #e0c3a0;
+  border-left: 4px solid #e0c3a0;
+  border-right: 4px solid #e0c3a0;
+  border-radius: 8px;
+  color: white;
+  background-image: linear-gradient(#43526e 2%, #212c2f 80%, #212c2f 10%);
+}
+
+.Directions-SoulTransfer {
+  font-size: 12px;
+  cursor: pointer;
+  color: white;
+  text-decoration: underline;
+}
+
+.Directions-cell:hover {
+  background-color: #ddd;
+}
+
+.CustomBuild {
+  position: fixed;
+  left: 61vw;
+  /* right: 5vw; */
+}
+
+.CustomBuild-cell {
+  height: 2em;
+  overflow: hidden;
+  min-width: 20em;
+}
+
+.CustomBuild-header {
+  width: 100%;
+  border: 1px solid black;
+  padding: 1em;
+  background-color: white;
+  font-size: 14px;
+}
+
+.ClassTable {
+  table-layout: fixed;
+  vertical-align: top;
+  display: inline-block;
+  width: 30vw;
+  padding: 0em 1em 1em 1em;
+}
+
+.ClassTable-body {
+}
+
+.ClassTable-cell {
+  border: 1px solid #ddd;
+  padding: 0px;
+  cursor: pointer;
+  font-family: monospace;
+  font-size: 12px;
+  height: 2em;
+  overflow: hidden;
+}
+
+.ClassTable-header {
+  width: 100%;
+  border: 1px solid black;
+  padding: 1em;
+  background-color: white;
+  font-size: 14px;
+}
+
+.ClassTable-row {
+  background-color: #212c2f;
+}
+
+.ClassTable-row:nth-child(even) {
+  background-color: #3a494d;
+}
+
+.ClassTable-row:hover {
+  background-color: rgb(75, 94, 99);
+  opacity: 0.8;
+  outline: 1px dashed yellow;
+}
+
+.Warning-box {
+  color: crimson;
+  text-decoration: underline;
+  width: 100%;
+  margin-left: 2.5em;
+  position: relative;
+  font-family: cursive;
+  line-height: 25px;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
