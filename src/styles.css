@@ -2,8 +2,8 @@ body {
   /* background-color: #252e3f; */
   /* the images below are the same, but: blue, purple, or red */
   /* background-image: url("./images/background_blue.jpg"); */
-  background-image: url("./images/background_purple.jpg");
-  /* background-image: url("./images/background_red.jpg"); */
+  /* background-image: url("./images/background_purple.jpg"); */
+  background-image: url("./images/background_red.jpg");
 
   background-attachment: fixed;
 }
@@ -153,7 +153,28 @@ body {
   font-size: 14px;
 }
 
-.ClassTable {
+.tags {
+  display: flex;
+  margin-left: 4px;
+}
+
+.tag {
+  color: white;
+  background-color: #40616a;
+  border-radius: 2px;
+  margin-right: 10px;
+}
+
+.FacetTable {
+  display: table;
+  table-layout: auto;
+  vertical-align: top;
+  /*display: inline-block;*/
+  width: 60vw;
+  padding: 0em 1em 1em 1em;
+}
+
+.FacetResultTable {
   table-layout: fixed;
   vertical-align: top;
   display: inline-block;
@@ -161,10 +182,24 @@ body {
   padding: 0em 1em 1em 1em;
 }
 
-.ClassTable-body {
+.FacetResultTable-row {
+  background-color: #212c2f;
 }
 
-.ClassTable-cell {
+.FacetResultTable-row:nth-child(even) {
+  background-color: #3a494d;
+}
+
+.FacetResultTable-row:hover {
+  background-color: rgb(75, 94, 99);
+  opacity: 0.8;
+  outline: 1px dashed yellow;
+}
+
+.FacetTable-body {
+}
+
+.FacetTable-cell {
   border: 1px solid #ddd;
   padding: 0px;
   cursor: pointer;
@@ -174,7 +209,7 @@ body {
   overflow: hidden;
 }
 
-.ClassTable-header {
+.FacetTable-header {
   width: 100%;
   border: 1px solid black;
   padding: 1em;
@@ -182,15 +217,22 @@ body {
   font-size: 14px;
 }
 
-.ClassTable-row {
+.FacetTable-row {
   background-color: #212c2f;
 }
 
-.ClassTable-row:nth-child(even) {
-  background-color: #3a494d;
+.FacetTable-row td:nth-child(1) {
+  /*background-color: #3a494d;*/
+  width: 150px;
+}
+.FacetTable-row td:nth-child(2) {
+  width: 20px;
+}
+.FacetTable-row td:nth-child(3) {
+
 }
 
-.ClassTable-row:hover {
+.FacetTable-row:hover {
   background-color: rgb(75, 94, 99);
   opacity: 0.8;
   outline: 1px dashed yellow;

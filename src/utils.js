@@ -1,4 +1,5 @@
-import * as Classes from "./classes";
+import * as Facets from "./facets";
+import SKILLS from "./data/skills.json";
 
 /*
 Skill {
@@ -8,6 +9,10 @@ Skill {
   color: string,
 }
 */
+
+export const SKILL_LEARN_LEVELS = [
+  0, 0, 4, 8, 12, 17, 22, 28, 34, 41, 48, 56, 63, 72, 81
+];
 
 const CLARITY_STOPS = [
   22,
@@ -49,18 +54,17 @@ const getSoulClarityIncreaseFromLevel = (level) => {
   return 0;
 };
 
-export const getClassByNumber = (number) => {
-  return Classes.names[number];
+export const getFacetByNumber = (number) => {
+  return Facets.names[number];
 };
 
-export const getClassNumber = (className) => {
-  return Classes.names.indexOf(className);
+export const getFacetNumber = (facetName) => {
+  return Facets.names.indexOf(facetName);
 };
 
 export const getSkillNumberByName = (name) => {
-  for (const s of Object.entries(Classes.SKILL_MAP)) {
-    let number = s[0];
-    let skill = s[1];
+  for (const skill of SKILLS) {
+    const number = skill.id;
 
     if (skill.name === name) {
       return number;
@@ -68,115 +72,146 @@ export const getSkillNumberByName = (name) => {
   }
 
   console.warn("getSkillNumberByName() - error", name);
-  return 0;
+  return -1;
 };
 
-export const getSkillByName = (name) => {
-  let potentialSkill = Object.entries(Classes.SKILL_MAP).filter(
-    (x) => x[1].name === name
-  )[0];
-  if (potentialSkill) {
-    return potentialSkill[1];
+export const getSkillByName = name => {
+  return SKILLS.filter(x => x.name === name)[0];
+};
+
+export const getSkillByNumber = number => {
+  number = parseInt(number);
+  return SKILLS.filter(x => x.id === number)[0];
+};
+
+export const getFacetOrder = build => {
+  //first categorize skills by facet name
+  let facets = {};
+  // facets[build.facet] = { skills: [] }
+  for (const skill of build.skills) {
+    const facetName = skill.facet;
+    facets[facetName] = facets[facetName] || {
+      skills: []
+    };
+    facets[facetName].skills.push(skill);
+    console.log(`adding ${skill.name} to ${facetName}`);
   }
 
-  return undefined;
-};
+  console.log("facets", facets);
 
-export const getSkillByNumber = (number) => {
-  return Classes.SKILL_MAP[number];
-};
-
-export const getClassFromSkillName = (name) => {
-  let potentialSkill = getSkillByName(name);
-  if (potentialSkill) {
-    return potentialSkill.className;
-  }
-
-  console.warn("couldn't get class from skill with name", name);
-  return "";
-};
-
-export const getClassOrder = (build) => {
-  /*
-    orders 1 - 100
-    ---------------
-    single, non-innate skills: 20
-    multi, non-innate skills: 21 - 98
-    skills including innate: 99
-    target class skills: 100
-  */
-
-  //first categorize skills by class name
-  let classes = {};
-  for (const s of build.skills.filter((x) => x.name)) {
-    let clsName = getClassFromSkillName(s.name);
-    if (!classes[clsName]) {
-      classes[clsName] = {
-        skills: []
-      };
-    }
-
-    classes[clsName].skills.push(s);
-  }
-
-  //sort skills of each class in factory default order
-  for (const obj of Object.entries(classes)) {
-    //let key = obj[0];
-    let value = obj[1];
-    value.skills.sort((a, b) => {
+  //sort skills of each facet in factory default order
+  for (const [, facet] of Object.entries(facets)) {
+    facet.skills.sort((a, b) => {
       return a.level - b.level;
     });
   }
 
-  //now sort out easy order checks
-  for (const k of Object.keys(classes)) {
-    let cls = classes[k];
-    if (cls.skills.length === 1) {
-      //single skill in class
-      if (cls.skills[0].innate) {
-        cls.order = 99;
-      } else {
-        cls.order = 20;
-      }
-    } else {
-      //multiple skills in class
-      let next = false;
-      let highestSkillLvl = cls.skills[cls.skills.length - 1].level;
+  // fast-method ordering =====================================
 
-      for (const skill of cls.skills) {
-        if (!next) {
-          if (skill.innate) {
-            cls.order = 99;
-            next = true;
-          } else {
-            let skLevel = skill.level;
-            if (skLevel === highestSkillLvl) {
-              //don't increase order, since this skill is "free"
-            } else {
-              cls.order = Math.max(cls.order || 20, skLevel);
-            }
+  // first, set target facet as last
+  if (facets[build.facet]) {
+    facets[build.facet].order = 999;
+  }
+
+  // next, we want to look at the last learned skill in each facet
+  // and sort the facets by the level this skill is learned in ascending order
+  const ascLevel = [...Object.entries(facets)].sort((a, b) => {
+    const facetA = a[1];
+    const facetB = b[1];
+
+    const facetALastSkillLevel = facetA.skills[facetA.skills.length - 1].level;
+    const facetBLastSkillLevel = facetB.skills[facetB.skills.length - 1].level;
+
+    return facetALastSkillLevel - facetBLastSkillLevel;
+  });
+
+  let hasTargetFacetSkills = false;
+  for (let i = 0; i < ascLevel.length; i++) {
+    const mapEntry = ascLevel[i];
+    const facetName = mapEntry[0];
+    const facet = mapEntry[1];
+    if (facetName !== build.facet) {
+      facet.order = i + 360;
+      console.log(`\t${facetName} order ${i}`);
+    } else {
+      hasTargetFacetSkills = true;
+    }
+  }
+
+  // add empty target facet at end if doesn't exist
+  if (!hasTargetFacetSkills) {
+    ascLevel.push([build.facet, { skills: [] }]);
+  }
+
+  console.log("ascLevel", ascLevel);
+
+  // make highest costing skill in target facet be unique chosen skill (free)
+  const targetFacet = ascLevel.filter(x => x[0] === build.facet)[0];
+  const moneySkill = targetFacet[1]?.skills.slice(0).sort((a, b) => {
+    return b.cost - a.cost;
+  })[0];
+  if (moneySkill) {
+    // moneySkill.learn = true;
+    targetFacet[1].skills = [{...moneySkill, learn: true}, ...targetFacet[1].skills.sort((a, b) => {
+      return b.cost - a.cost;
+    }).filter(x => x.name !== moneySkill.name)];    
+  }
+
+
+  // handle efficient route if active
+  let reOrdered = ascLevel.slice(0);
+  console.log("build", build);
+  if (build.efficient) {
+    let mostExpensiveFacet = ascLevel[0];
+    let mostCost = 0;
+    if (mostExpensiveFacet) {
+      mostExpensiveFacet = mostExpensiveFacet[0];
+
+      for (const mapEntry of ascLevel) {
+        const facetName = mapEntry[0];
+        const facet = mapEntry[1];
+        let facetCostSum = 0;
+        for (const sk of facet.skills) {
+          if (facetName === targetFacet[0] && sk.innate) {
+            continue;
           }
+          facetCostSum += sk.cost;
         }
+
+        if (facetCostSum > mostCost) {
+          mostCost = facetCostSum;
+          mostExpensiveFacet = facetName;
+        }
+      }
+
+      console.log("most expensive facet", mostExpensiveFacet);
+
+      // put most expensive facet at beginning for the INITIAL discount
+      const moneyFacet = ascLevel.filter(x => x[0] === mostExpensiveFacet)[0];
+      moneyFacet[1].order = 350;
+      reOrdered = [moneyFacet, ...ascLevel.filter(x => x[0] !== mostExpensiveFacet)];
+
+      if (mostExpensiveFacet === targetFacet[0]) {
+        // so now we need a split of the target facet
+        // one at the beginning to get the INITIAL discount, and one at the end
       }
     }
   }
 
-  let acc = [...Object.entries(classes)].sort((a, b) => {
-    if (a[1].order === b[1].order) {
-      return a[1].skills.length - b[1].skills.length;
-    }
-
+  reOrdered.sort((a, b) => {
     return a[1].order - b[1].order;
   });
 
-  let classesByOrder = new Map([
-    ...acc.filter((elem) => elem[0] !== build.className),
-    ...acc.filter((elem) => elem[0] === build.className)
+  let facetsByOrder = new Map([
+    ...reOrdered.filter((elem) => elem[0] !== build.facet),
+    ...reOrdered.filter((elem) => elem[0] === build.facet)
   ]);
+
+  console.log("facetsByOrder", facetsByOrder);
 
   let finalSteps = {
     /*
-    className: {
+    facet: {
       order: x,
       skills: [{
         name: "",
@@ -186,63 +221,32 @@ export const getClassOrder = (build) => {
     */
   };
 
-  let skillCount = 0;
   let totalLevel = 0;
   let soulClarity = build.soulClarity;
-  for (const c of classesByOrder.entries()) {
-    let clsName = c[0];
-    let obj = c[1];
+  for (const [clsName, obj] of facetsByOrder.entries()) {
     finalSteps[clsName] = finalSteps[clsName] || {
       skills: []
     };
 
     let skills = [];
-    for (const sk of obj.skills) {
-      skillCount++;
-      let learnedLevel = sk.level;
-      let reqLevel = learnedLevel;
-      if (obj.order === 20) {
-        reqLevel = Math.min(reqLevel, 20);
-      }
+    for (const skill of obj.skills) {
+      if (!skill) continue;
       skills.push({
-        name: sk.name,
-        description: sk.description,
-        innate: sk.innate,
-        color: sk.color,
-        level: reqLevel
+        name: skill.name,
+        description: skill.description,
+        facet: skill.facet,
+        innate: skill.innate,
+        color: skill.color,
+        level: skill.level,
+        cost: skill.cost,
+        learn: skill.learn
       });
     }
 
-    let highestLevelSkill = skills[skills.length - 1];
-    let conditionalSkills = skills.filter(
-      (x) => !x.innate && x.name !== highestLevelSkill.name
-    );
-    let normSkillLevel = obj.order;
-    if (conditionalSkills.length > 0) {
-      normSkillLevel = conditionalSkills[conditionalSkills.length - 1].level;
-    }
-
-    let transferLevel = Math.max(
-      getLevelForSkillTransfer(skillCount),
-      normSkillLevel,
-      obj.order
-    );
+    let transferLevel = getLevelForSkillTransfer(skills);
 
     transferLevel = Math.min(99, transferLevel);
     totalLevel += transferLevel;
-
-    //at this point, we need to sort the skills in a specific order
-    //we get 1 free skill on transfer, so ideally, this would be highest level one
-    //so order should be: [highest level as free skill][rest of list in asc order]
-
-    skills.sort((a, b) => {
-      return a.level - b.level;
-    });
-
-    skills = [
-      ...[highestLevelSkill],
-      ...skills.filter((x) => x.name !== highestLevelSkill.name)
-    ];
 
     finalSteps[clsName] = {
       order: obj.order,
@@ -257,43 +261,39 @@ export const getClassOrder = (build) => {
   }
 
   let finalStepsPreSorted = [...Object.entries(finalSteps)].sort((a, b) => {
-    return a[1].transferLevel - b[1].transferLevel;
+    return a[1].order - b[1].order;
   });
 
   let finalStepsSorted = new Map([
-    ...finalStepsPreSorted.filter((elem) => elem[0] !== build.className),
-    ...finalStepsPreSorted.filter((elem) => elem[0] === build.className)
+    ...finalStepsPreSorted.filter((elem) => elem[0] !== build.facet),
+    ...finalStepsPreSorted.filter((elem) => elem[0] === build.facet)
   ]);
+
+  console.log("finalSteps, finalStepsPreSorted, finalStepsSorted", finalSteps, finalStepsPreSorted, finalStepsSorted);
 
   return finalStepsSorted;
 };
 
-export const getClassSkillsFromBuild = (build, className) => {
-  let allSkills = Classes.getAllClasses()[className];
+export const getFacetSkillsFromBuild = (build, facetName) => {
+  let allSkills = Facets.getAllFacets()[facetName];
   let knownSkills = build.skills.map((x) => x.name); //just the names
-  let classSkills = allSkills.filter((x) => knownSkills.indexOf(x.name) !== -1);
+  let facetSkills = allSkills.filter((x) => knownSkills.indexOf(x.name) !== -1);
 
-  return classSkills;
+  return facetSkills;
 };
 
-export const getSkillLevel = (skill) => {
-  if (!skill.className) {
-    return 0;
-  }
-
-  let className = skill.className;
-  let clsSkills = Classes.getAllClasses()[className];
+export const getSkillLevel = skill => {
+  const facetName = skill.facet;
+  const facetSkills = Facets.getAllFacets()[facetName];
   let index = 0;
-  for (let i = 0; i < clsSkills.length; i++) {
-    if (clsSkills[i].name === skill.name) {
+  for (let i = 0; i < facetSkills.length; i++) {
+    if (facetSkills[i].name === skill.name) {
       index = i;
       break;
     }
   }
 
-  let level = Math.max(0, index - 1) * 8;
-
-  return level;
+  return SKILL_LEARN_LEVELS[index];
 };
 
 export const isJsonString = (str) => {
@@ -306,12 +306,21 @@ export const isJsonString = (str) => {
   return true;
 };
 
-const getLevelForSkillTransfer = (numOfSkills) => {
-  return 20 + (numOfSkills - 1) * 8;
+const getLevelForSkillTransfer = skills => {
+  let highest = 0;
+  for (const skill of skills) {
+    if (skill.innate) {
+      return 99;
+    }
+
+    highest = Math.max(highest, skill.level);
+  }
+
+  return highest;
 };
 
-export const getClassColor = (className) => {
-  return Classes.colors[Classes.names.indexOf(className)] || "white";
+export const getFacetColor = (facetName) => {
+  return Facets.colors[Facets.names.indexOf(facetName)] || "white";
 };
 
 export const Skill = (name, description, innate, color) => {
@@ -324,24 +333,12 @@ export const Skill = (name, description, innate, color) => {
   };
 };
 
-export const newBuild = (name) => {
+export const newBuild = (name, efficient) => {
   return {
     name,
-    skills: [
-      Skill(),
-      Skill(),
-      Skill(),
-      Skill(),
-      Skill(),
-      Skill(),
-      Skill(),
-      Skill(),
-      Skill(),
-      Skill(),
-      Skill(),
-      Skill()
-    ],
+    skills: [],
     soulClarity: 0,
-    className: Classes.names[0]
+    facet: Facets.names[0],
+    efficient
   };
 };

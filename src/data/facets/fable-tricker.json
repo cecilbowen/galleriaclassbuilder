@@ -1,0 +1,237 @@
+[
+  {
+    "name": "Happy Dance",
+    "description": "Revelation increase +50%.",
+    "cost": 50,
+    "color": "red",
+    "category": false,
+    "innate": "Fable Tricker",
+    "tags": [
+      [
+        "Pos.",
+        "Attacker"
+      ],
+      [
+        "HP",
+        "100%"
+      ],
+      [
+        "No Stack"
+      ]
+    ]
+  },
+  {
+    "name": "Follow-Up",
+    "description": "Target enemy will no longer be enraged.",
+    "cost": 50,
+    "color": "red",
+    "category": false,
+    "innate": "Fable Tricker",
+    "tags": [
+      [
+        "Atk."
+      ]
+    ]
+  },
+  {
+    "name": "Clown's Spectacle",
+    "description": "Clown's Spectacle Donum.  Inflicts abnormal status conditions on enemies.  Performs mesmerizing spectacle that removes enemy's rage.",
+    "cost": 10,
+    "color": "blue",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Learn"
+      ]
+    ]
+  },
+  {
+    "name": "Magic Trick",
+    "description": "Magic Trick Donum.  Removes status effects.  Removes status effects caused by enemies.",
+    "cost": 10,
+    "color": "blue",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Learn"
+      ]
+    ]
+  },
+  {
+    "name": "Friendship Token",
+    "description": "Significantly increases Resonance rate.",
+    "cost": 10,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "HP<=",
+        "1%"
+      ],
+      [
+        "Atk."
+      ]
+    ]
+  },
+  {
+    "name": "Pain, Go Away ♪",
+    "description": "Pain, Go Away ♪ Healing Donum.  Restores 30% of MAX HP.  Can only be used in battle.",
+    "cost": 10,
+    "color": "blue",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Learn"
+      ]
+    ]
+  },
+  {
+    "name": "Novice Jitterbug",
+    "description": "Adds +50% to HP recovered when using a revive item.",
+    "cost": 37,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "In Battle"
+      ]
+    ]
+  },
+  {
+    "name": "Pharmaceutics I",
+    "description": "Triples recovery effect when using a recovery item.",
+    "cost": 20,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "In Battle"
+      ]
+    ]
+  },
+  {
+    "name": "Maintenance",
+    "description": "Doubles the number of turns Mira Machina occurs in front Coven.",
+    "cost": 18,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Pos.",
+        "Attacker"
+      ],
+      [
+        "No Stack"
+      ]
+    ]
+  },
+  {
+    "name": "Class II",
+    "description": "Enhances a front Coven's Mira Machina.  Increases ability by 1.5x.",
+    "cost": 18,
+    "color": "red",
+    "category": "Class II",
+    "innate": false,
+    "tags": [
+      [
+        "Alike Excl."
+      ],
+      [
+        "Pos.",
+        "Attacker"
+      ],
+      [
+        "No Stack"
+      ]
+    ]
+  },
+  {
+    "name": "Panic Circus",
+    "description": "Panic Circus Donum.  Inflicts status effects on enemies.  A Technique that tosses you about.",
+    "cost": 10,
+    "color": "blue",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Learn"
+      ]
+    ]
+  },
+  {
+    "name": "Pursuing Strike",
+    "description": "Pursuit rate +20%.",
+    "cost": 7,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Pos.",
+        "Supporter"
+      ],
+      [
+        "Pos.",
+        "Pursuit Quota"
+      ],
+      [
+        "HP",
+        "100%"
+      ]
+    ]
+  },
+  {
+    "name": "Mob-ified",
+    "description": "Less likely to be targeted by enemies.",
+    "cost": 5,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "HP<=",
+        "30%"
+      ]
+    ]
+  },
+  {
+    "name": "Advanced Jitterbug",
+    "description": "Adds +75% HP restored when using a recovery item.",
+    "cost": 56,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "In Battle"
+      ]
+    ]
+  },
+  {
+    "name": "Class III",
+    "description": "Enhances a Coven's Mira Machina.  Doubles all stats.",
+    "cost": 25,
+    "color": "red",
+    "category": "Class II",
+    "innate": false,
+    "tags": [
+      [
+        "Alike Excl."
+      ],
+      [
+        "Pos.",
+        "Attacker"
+      ],
+      [
+        "No Stack"
+      ]
+    ]
+  }
+]

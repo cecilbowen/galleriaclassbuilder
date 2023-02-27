@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import * as Classes from "../classes";
+import * as Classes from "../facets";
 
 /*
 props:
@@ -39,8 +39,8 @@ const CharacterPortrait = (props) => {
   const [backgroundImage, setBackgroundImage] = useState();
 
   useEffect(() => {
-    setBackgroundImage(grabCharacterPortrait(props.className));
-  }, [props.className]);
+    setBackgroundImage(grabCharacterPortrait(props.facet));
+  }, [props.facet]);
 
   const grabCharacterPortrait = (className) => {
     let index = Classes.names.indexOf(className);

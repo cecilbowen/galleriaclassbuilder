@@ -1,0 +1,227 @@
+[
+  {
+    "name": "Healing Chime",
+    "description": "Regain 3% HP at end of turn.  Also regain 20% HP when battle ends.",
+    "cost": 50,
+    "color": "red",
+    "category": false,
+    "innate": "Theatrical Dolce",
+    "tags": [
+      [
+        "Equip",
+        "Bell"
+      ]
+    ]
+  },
+  {
+    "name": "Charm",
+    "description": "Attacks use CHM.  Won't enrage easily by attacking unless enemy is malignant.",
+    "cost": 50,
+    "color": "red",
+    "category": false,
+    "innate": "Theatrical Dolce",
+    "tags": [
+      [
+        "Pos.",
+        "Attacker"
+      ],
+      [
+        "HP",
+        "100%"
+      ]
+    ]
+  },
+  {
+    "name": "Alluring Cheer",
+    "description": "Slightly increases action speed of adjacent puppet soldiers.",
+    "cost": 4,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "HP",
+        "100%"
+      ]
+    ]
+  },
+  {
+    "name": "Kissy Cheer",
+    "description": "Restores 3% of attackers in your Coven's HP.",
+    "cost": 39,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Pos.",
+        "Supporter"
+      ],
+      [
+        "Turn End"
+      ],
+      [
+        "Stack"
+      ]
+    ]
+  },
+  {
+    "name": "Overproduction",
+    "description": "Power increased by +50% when attacked.",
+    "cost": 20,
+    "color": "red",
+    "category": "Alluring Cry",
+    "innate": false,
+    "tags": [
+      [
+        "Alike Excl."
+      ]
+    ]
+  },
+  {
+    "name": "Love, Hate",
+    "description": "Increases amount of Rapport value by 2x.",
+    "cost": 20,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "In Battle"
+      ]
+    ]
+  },
+  {
+    "name": "Ready-to-Eat Dolce",
+    "description": "A donum that increases Attack and Stun.  Increases Attack by 1.25x and Stun by +1000.",
+    "cost": 10,
+    "color": "blue",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Learn"
+      ]
+    ]
+  },
+  {
+    "name": "Funny Smile",
+    "description": "Become more easily targeted by enemies once targeted by an enemy.",
+    "cost": 6,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Def.",
+        "Def. Pos."
+      ]
+    ]
+  },
+  {
+    "name": "Illusion Res. Up",
+    "description": "Illusion Resistance +25.  Enhances Resistance to Illusion.",
+    "cost": 10,
+    "color": "blue",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Always"
+      ]
+    ]
+  },
+  {
+    "name": "Sweet Charge",
+    "description": "Sweet Charge Donum.  Restores stun value.  Recovers 50% of stun value.",
+    "cost": 10,
+    "color": "blue",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Learn"
+      ]
+    ]
+  },
+  {
+    "name": "Tenacious Charm",
+    "description": "CHM +35%.  Affects enemy target selection.",
+    "cost": 10,
+    "color": "blue",
+    "category": "Charmer",
+    "innate": false,
+    "tags": [
+      [
+        "Alike Excl."
+      ]
+    ]
+  },
+  {
+    "name": "Cursed Chime",
+    "description": "Increases Resonance rate, making it easier for enemies to target you.",
+    "cost": 15,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Equip",
+        "Bell"
+      ]
+    ]
+  },
+  {
+    "name": "Fog Res. Up",
+    "description": "Fog Resistance +15.  Enhances Resistance to Fog attacks.",
+    "cost": 10,
+    "color": "blue",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Always"
+      ]
+    ]
+  },
+  {
+    "name": "Nipple Slip",
+    "description": "CHM +50%.  Resets when attacked.",
+    "cost": 20,
+    "color": "red",
+    "category": "Nipple Slip",
+    "innate": false,
+    "tags": [
+      [
+        "Alike Excl."
+      ],
+      [
+        "Evade"
+      ],
+      [
+        "Max",
+        "150%"
+      ]
+    ]
+  },
+  {
+    "name": "Rose Dolce",
+    "description": "CHM +100%.  Resets after attacked.",
+    "cost": 40,
+    "color": "red",
+    "category": "Nipple Slip",
+    "innate": false,
+    "tags": [
+      [
+        "Alike Excl."
+      ],
+      [
+        "Evade"
+      ],
+      [
+        "Max",
+        "300%"
+      ]
+    ]
+  }
+]

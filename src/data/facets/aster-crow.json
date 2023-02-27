@@ -1,0 +1,224 @@
+[
+  {
+    "name": "Star Burst",
+    "description": "Adds 75% to Attack when sole attacker in brigade.  Does not include Support and those unable to fight as attackers.",
+    "cost": 50,
+    "color": "red",
+    "category": false,
+    "innate": "Aster Crow",
+    "tags": [
+      [
+        "In Battle"
+      ]
+    ]
+  },
+  {
+    "name": "Stubbornness",
+    "description": "Remain at 1 HP when you receive death damage.",
+    "cost": 50,
+    "color": "red",
+    "category": false,
+    "innate": "Aster Crow",
+    "tags": [
+      [
+        "In Battle",
+        1
+      ]
+    ]
+  },
+  {
+    "name": "War Spire",
+    "description": "Critical Value +50.",
+    "cost": 25,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Equip",
+        "Lance"
+      ],
+      [
+        "Atk."
+      ]
+    ]
+  },
+  {
+    "name": "Lucky Star",
+    "description": "Greatly increases LUC.",
+    "cost": 25,
+    "color": "blue",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Always"
+      ]
+    ]
+  },
+  {
+    "name": "Startle Recovery",
+    "description": "Increases natural recovery speed from Startle status.",
+    "cost": 5,
+    "color": "blue",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Always"
+      ]
+    ]
+  },
+  {
+    "name": "High Gear I",
+    "description": "Slightly increases action speed.",
+    "cost": 12,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "HP>=",
+        "50%"
+      ]
+    ]
+  },
+  {
+    "name": "Lucky Punch",
+    "description": "Damage +50% when counter is triggered.  Activates with counter skills.",
+    "cost": 10,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Luc>=",
+        "Fortune"
+      ]
+    ]
+  },
+  {
+    "name": "Shining Fortune",
+    "description": "Slightly increases LUC.  Resets when out of combat.",
+    "cost": 18,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Pos.",
+        "Attacker"
+      ],
+      [
+        "Turn"
+      ],
+      [
+        "Max",
+        "Turn 33"
+      ]
+    ]
+  },
+  {
+    "name": "Pierce Res. Up",
+    "description": "Pierce Resistance +15.  Enhances Resistance to Pierce attacks.",
+    "cost": 10,
+    "color": "blue",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Always"
+      ]
+    ]
+  },
+  {
+    "name": "High Gear II",
+    "description": "Guard rate +5%.",
+    "cost": 14,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "HP>=",
+        "50%"
+      ]
+    ]
+  },
+  {
+    "name": "Adrenaline Rush",
+    "description": "Stun value +2400.",
+    "cost": 13,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "HP<=",
+        "1%"
+      ]
+    ]
+  },
+  {
+    "name": "Lance Master",
+    "description": "Improves lance proficiency by 4 levels.",
+    "cost": 15,
+    "color": "blue",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Always"
+      ]
+    ]
+  },
+  {
+    "name": "Speedy Backwater",
+    "description": "Greatly increases action speed.",
+    "cost": 15,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Pos.",
+        "Vanguard"
+      ],
+      [
+        "HP<=",
+        "10%"
+      ]
+    ]
+  },
+  {
+    "name": "Hero",
+    "description": "Increases Rapport gained by 1.5x.",
+    "cost": 14,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "In Battle"
+      ],
+      [
+        "Equip",
+        "Master S+ Weapon"
+      ]
+    ]
+  },
+  {
+    "name": "High Gear III",
+    "description": "HIT +10%",
+    "cost": 8,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "HP>=",
+        "50%"
+      ]
+    ]
+  }
+]

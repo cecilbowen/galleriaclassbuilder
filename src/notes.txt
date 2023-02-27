@@ -1,0 +1,42 @@
+source of some info: https://gamefaqs.gamespot.com/ps4/260865-labyrinth-of-galleria-the-moon-society/faqs/80172
+
+soul clarity determines skill points
++1 skill point per soul clarity increase
+    soul clarity 1 (initial) - 40 skill points
+    soul clarity 2 - 41 skill points
+    soul clarity 4 - 44 skill points
+    etc (see table below)
+
+
+Skill Point Caps/Increases
+    Base	                        40
+    Soul Clarity 2-99               +1-98
+    First Witch Petition	        +10 (adds 1 star to skill screen)
+    Pre-Grand Cathedral Total Cap	148
+    Soul Clarity 100-999	        +1-90 (+1 every 10 levels)
+    Second Witch Petition	        +30 (adds second star to skill screen)
+    Grand Cathedral Total Cap	    268
+
+skill acquire levels
+    skills are learned in order from top to bottom at the following levels: 4, 8, 12, 17, 22, 28, 34, 41, 48, 56, 63, 72, 81
+    so, 0 + (4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 7, 9, 9)
+    choosing your "free" skill just means that at the level you would have learned the skill, nothing happens
+      (since you already have it)
+
+soul transfer skills 
+    still need to be lvl 99 for unique skills transfer 
+    selected skill during puppet craft now counts as a unique skill, therefore it's best to
+      NOT choose it if you want to transfer it early (pre lvl 99)
+    once you acquire a skill via soul transfer, you can never lose it
+        for example, if you soul transfer a peer fortress at level 99, you get its unique skills carried over
+        if you were to then soul transfer again but at level 1, you would still keep all the skills you've learned,
+          including the peer fortress's unique skills
+
+
+Skill Point Cost Discounts
+    UNIQUE: unique skills -> 100% discount (no cost)
+    INITIAL: skills starting class learned -> 75% discount
+    CLASS: skills learned by current class -> 66% discount
+    NONE: skills that don't fit any of the other criteria -> 0% discount (full price)
+
+alike exclude skills belong to a category of similar skills that do not stack and cannot even be applied at the same time

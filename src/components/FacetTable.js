@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import * as Classes from "../classes";
-import { getClassColor } from "../utils";
+import * as Classes from "../facets";
+import { getFacetColor } from "../utils";
 
 /*
 props:
@@ -9,22 +9,30 @@ props:
   editBuild = (skill)
 */
 
-const ClassTable = (props) => {
-  const [color] = useState(getClassColor(props.header));
+const FacetTable = (props) => {
+  const [color] = useState(getFacetColor(props.header));
 
   const renderTableRow = (skill, index) => {
+    const tags = skill.tags.map(x => `${x.join(" ")}`);
+
     return (
       <tr
         key={`tr-${index}`}
-        className={"ClassTable-row"}
+        className={"FacetTable-row"}
         onClick={() => props.editBuild(skill)}
-        title={`Learn at Level ${Math.max(0, index - 1) * 8}`}
+        title={`Learn at Level ${skill.level}`}
       >
         <td className={"SkillFrame"}>
           {skill.name}
           {skill.innate && " (Innate)"}
         </td>
-        <td className={"SkillFrame"}>{skill.description}</td>
+        <td className={"SkillFrame"}>{skill.cost}</td>
+        <td className={"SkillFrame"}>
+          <div className="tags">
+            {tags.map(x => <div className="tag">{x}</div>)}
+          </div>
+          {skill.description}
+        </td>
       </tr>
     );
   };
@@ -33,13 +41,13 @@ const ClassTable = (props) => {
     let headerColor = `linear-gradient(${color} -40%, #212c2f 80%, #212c2f 10%)`;
 
     return (
-      <table className={"ClassTable"}>
-        <tbody className={"ClassTable-body"}>
+      <table className={"FacetTable"}>
+        <tbody className={"FacetTable-body"}>
           {props.header && (
-            <tr className={"ClassTable-header"}>
+            <tr className={"FacetTable-header"}>
               <th
                 className={"SkillFrame-header"}
-                colSpan={"2"}
+                colSpan={"3"}
                 style={{ backgroundImage: headerColor }}
               >
                 {props.header}
@@ -55,4 +63,4 @@ const ClassTable = (props) => {
   return renderTable(props.skills);
 };
 
-export default ClassTable;
+export default FacetTable;

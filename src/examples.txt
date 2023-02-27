@@ -1,0 +1,52 @@
+8_3-247-38-144-142-310-305-302-122-131_1
+===============================================
+target: peer fortress, fastest route
+===============================================
+
+(INITIAL: -75% cost)
+	master masochist - magia maid, 2nd - cost 43 = 32
+
+hardening reflex - gothic gratonia, 6th - cost 15
+
+body modification - shinomashira, 7th - cost 15
+
+lone ranger - wonder corsair, 8th - cost 29
+tactical defense - wonder corsair, 6th - cost 30
+
+absolute defense - peer chariot, 9th - cost 42
+masochistic - peer chariot, 4th - cost 21
+iron stance - peer chariot, 1st - cost 43
+
+(UNIQUE [chosen]: -100% cost)
+	siege shield - peer fortress, 1st - cost 20 = 0
+(CLASS: -66% cost)
+	solidify - peer fortress, 10th - cost 5 = 3
+
+TOTAL COST: 230
+
+
+===============================================
+target: peer fortress, cost-efficient route
+===============================================
+
+(INITIAL: -75% cost)
+	absolute defense - peer chariot, 9th - cost 42 = 31
+	masochistic - peer chariot, 4th - cost 21 = 15
+	iron stance - peer chariot, 1st - cost 43 = 32
+
+master masochist - magia maid, 2nd - cost 43
+
+hardening reflex - gothic gratonia, 6th - cost 15
+
+body modification - shinomashira, 7th - cost 15
+
+lone ranger - wonder corsair, 8th - cost 29
+tactical defense - wonder corsair, 6th - cost 30
+
+(UNIQUE [chosen]: -100% cost)
+	siege shield - peer fortress, 1st - cost 20 = 0
+(CLASS: -66% cost)
+	solidify - peer fortress, 10th - cost 5 = 3
+
+TOTAL COST: 213
+

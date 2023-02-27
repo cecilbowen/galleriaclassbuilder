@@ -1,0 +1,218 @@
+[
+  {
+    "name": "Scythe Dancer",
+    "description": "Grants a 12% chance to attack 4 additional times.",
+    "cost": 50,
+    "color": "red",
+    "category": false,
+    "innate": "Prima Reaper",
+    "tags": [
+      [
+        "Equip",
+        "Scythe"
+      ],
+      [
+        "Atk."
+      ]
+    ]
+  },
+  {
+    "name": "Blood-Wind Dance",
+    "description": "Attack and AVD +100%, Defense and HIT -50%.  In addition, adds +35% chance of activating Star Storm Dance.",
+    "cost": 50,
+    "color": "red",
+    "category": false,
+    "innate": "Prima Reaper",
+    "tags": [
+      [
+        "HP<=",
+        "5%"
+      ]
+    ]
+  },
+  {
+    "name": "Wickerman",
+    "description": "Increases Attack by 100% for each lost part.",
+    "cost": 15,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "In Battle"
+      ]
+    ]
+  },
+  {
+    "name": "Wiccards",
+    "description": "Grants ATK based on Coven casualties.  For every Attack casualty +50%, for every Support casualty +20%.",
+    "cost": 18,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "In Battle"
+      ]
+    ]
+  },
+  {
+    "name": "Abyss's Child",
+    "description": "Your AVD is tripled while under the Abyss Status.",
+    "cost": 45,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "In Battle"
+      ]
+    ]
+  },
+  {
+    "name": "Alluring Cry",
+    "description": "Increases Power Source +10% when attacked.",
+    "cost": 5,
+    "color": "red",
+    "category": "Alluring Cry",
+    "innate": false,
+    "tags": [
+      [
+        "Alike Excl."
+      ]
+    ]
+  },
+  {
+    "name": "Blood Zone",
+    "description": "15% to counter against Flame, Mud or Fog attacks in range.  Damage taken during enemy turn will increase counter damage.  Max 1 counter.",
+    "cost": 37,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "In Battle"
+      ]
+    ]
+  },
+  {
+    "name": "Evil in Bloom",
+    "description": "Brigade's karma value is used to determine LUC.",
+    "cost": 10,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "In Battle"
+      ]
+    ]
+  },
+  {
+    "name": "Hawk Eyes",
+    "description": "Pursuit rate +30%.",
+    "cost": 13,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Pos.",
+        "Supporter"
+      ],
+      [
+        "Pos.",
+        "Pursuit Quota"
+      ]
+    ]
+  },
+  {
+    "name": "Black Blade",
+    "description": "Critical value +50.",
+    "cost": 30,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "HP<=",
+        "30%"
+      ]
+    ]
+  },
+  {
+    "name": "Rusty Blood Curse",
+    "description": "-20% DEF to enemies that KO this unit.  Effect persists for 3 turns.",
+    "cost": 50,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "In Battle",
+        1
+      ],
+      [
+        "KO",
+        "By Foe"
+      ]
+    ]
+  },
+  {
+    "name": "Vampirism",
+    "description": "Regenerates 10% of damage dealt.",
+    "cost": 15,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Atk.",
+        "Critical"
+      ]
+    ]
+  },
+  {
+    "name": "Animus Snatch",
+    "description": "Animus Snatch Donum.  Increases attack.  1.75x Attack.",
+    "cost": 10,
+    "color": "blue",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Learn"
+      ]
+    ]
+  },
+  {
+    "name": "Approximation Art",
+    "description": "HIT +35%.  Makes it easier for your attacks to hit enemies.",
+    "cost": 18,
+    "color": "blue",
+    "category": "Approximation Art",
+    "innate": false,
+    "tags": [
+      [
+        "Alike Excl."
+      ]
+    ]
+  },
+  {
+    "name": "Butler's High",
+    "description": "Critical value +50.  Resets when attacked.",
+    "cost": 15,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Evade"
+      ],
+      [
+        "Max",
+        "1 Turn"
+      ]
+    ]
+  }
+]

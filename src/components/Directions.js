@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import * as Classes from "../classes";
-import { getClassColor } from "../utils";
+import * as Classes from "../facets";
+import { getFacetColor } from "../utils";
 
 /*
 props:
-  steps = finalStepsSorted from getClassOrder(build) in utils.js
+  steps = finalStepsSorted from getFacetOrder(build) in utils.js
 */
 
 const Directions = (props) => {
@@ -23,7 +23,7 @@ const Directions = (props) => {
       <div style={{ fontSize: "8px" }}>Soul Clarity: {info.soulClarity}</div>
     );
 
-    let color = getClassColor(className);
+    let color = getFacetColor(className);
     let headerColor = `linear-gradient(${color} -40%, #212c2f 80%, #212c2f 10%)`;
 
     ret.push(
@@ -45,7 +45,7 @@ const Directions = (props) => {
     let numOfCols = 1;
     for (let i = 0; i < skills.length; i++) {
       let s = skills[i];
-      let autoLearn = i === 0 ? "on soul transfer" : `at level ${s.level}`;
+      let autoLearn = (s.learn) ? "on soul transfer" : `at level ${s.level}`;
 
       let styledSkillName = (
         <div style={{ textDecoration: "underline" }}>{s.name}</div>

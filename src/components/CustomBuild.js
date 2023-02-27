@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import * as Classes from "../classes";
-import { getClassColor, getClassSkillsFromBuild } from "../utils";
+import * as Classes from "../facets";
+import { getFacetColor, getFacetSkillsFromBuild } from "../utils";
 
 /*
 props:
@@ -22,7 +22,7 @@ const CustomBuild = (props) => {
   }, [props.customClass]);
 
   useEffect(() => {
-    setCustomColor(getClassColor(customClass));
+    setCustomColor(getFacetColor(customClass));
     props.changeClass(customClass);
   }, [customClass]);
 
@@ -44,14 +44,14 @@ const CustomBuild = (props) => {
     );
   };
 
-  const renderTableRow = (rowData, index) => {
+  const renderTableRow = (rowData, index, result) => {
     let cellColor = `linear-gradient(${rowData.color} -50%, #212c2f 60%, #212c2f 10%)`;
     let style = rowData.name === "" ? {} : { backgroundImage: cellColor };
 
     return (
       <tr
         key={`tr-${index}`}
-        className={"ClassTable-row"}
+        className={result ? "FacetResultTable-row" : "FacetTable-row"}
         onClick={() => props.editBuild(rowData)}
       >
         {renderCell(rowData.name + (rowData.innate ? " (Innate)" : ""), style)}
@@ -70,8 +70,8 @@ const CustomBuild = (props) => {
     );
 
     return (
-      <table className={"ClassTable"}>
-        <tbody className={"ClassTable-body"}>
+      <table className={"FacetResultTable"}>
+        <tbody className={"FacetResultTable-body"}>
           <tr
             className={"CustomBuild-header"}
             style={{ backgroundImage: headerColor }}
@@ -84,7 +84,7 @@ const CustomBuild = (props) => {
               Custom {customClass} {cycleTooltip}
             </th>
           </tr>
-          {tableData.map((x, i) => renderTableRow(x, i))}
+          {tableData.map((x, i) => renderTableRow(x, i, true))}
         </tbody>
       </table>
     );
@@ -94,7 +94,7 @@ const CustomBuild = (props) => {
   let notEnoughTargetClassSkills = false;
   let emptySlots = props.skills.filter((x) => x.name === "").length;
   if (emptySlots < 4) {
-    let targetClassSkills = getClassSkillsFromBuild(
+    let targetClassSkills = getFacetSkillsFromBuild(
       { skills: props.skills },
       customClass
     );

@@ -1,0 +1,234 @@
+[
+  {
+    "name": "Protective Spirit",
+    "description": "10% chance to swap with a Coven attacker.  Increases chance +15% per katar equipped.",
+    "cost": 50,
+    "color": "red",
+    "category": false,
+    "innate": "Peer Chariot",
+    "tags": [
+      [
+        "In Battle"
+      ]
+    ]
+  },
+  {
+    "name": "Reckless Charge",
+    "description": "Adds +125% to critical chance for next turn.  Will counter when attacked for 60% damage.  Limited to one counter.",
+    "cost": 50,
+    "color": "red",
+    "category": false,
+    "innate": "Peer Chariot",
+    "tags": [
+      [
+        "Pos.",
+        "Vanguard"
+      ],
+      [
+        "Def.",
+        "Def. Pos."
+      ]
+    ]
+  },
+  {
+    "name": "Iron Stance",
+    "description": "Increases Defense when using Fortify Coven.  Increase 30% Defense for every consecutive turn spent in defense formation.",
+    "cost": 43,
+    "color": "red",
+    "category": "Tortoise Shell",
+    "innate": false,
+    "tags": [
+      [
+        "Alike Excl."
+      ],
+      [
+        "Def.",
+        "Def. Pos."
+      ],
+      [
+        "Max",
+        "200%"
+      ]
+    ]
+  },
+  {
+    "name": "Contra-Attack",
+    "description": "25% chance to counter when physically attacked.  Critical +50, 100% counter damage, 1x.",
+    "cost": 18,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Equip",
+        "Master A+ Lance + Master A+ Katar"
+      ],
+      [
+        "Def.",
+        "Def. Pos."
+      ]
+    ]
+  },
+  {
+    "name": "Stench Recovery",
+    "description": "Increases natural recovery speed from Stench status.",
+    "cost": 5,
+    "color": "blue",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Always"
+      ]
+    ]
+  },
+  {
+    "name": "Masochistic",
+    "description": "Defense +35% when attacked.",
+    "cost": 21,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "In Battle"
+      ]
+    ]
+  },
+  {
+    "name": "Killing Blow",
+    "description": "During next turn's attack, if target is dying and low rank, any critical will become Critical Gore.",
+    "cost": 15,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Def.",
+        "Def. Pos."
+      ]
+    ]
+  },
+  {
+    "name": "Big Horn",
+    "description": "Big Horn Donum.  An attack that easily stuns enemies.  Delivers stunning blows.",
+    "cost": 10,
+    "color": "blue",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Learn"
+      ]
+    ]
+  },
+  {
+    "name": "Flame Res. Up",
+    "description": "Flame Resistance +15.  Enhances Resistance to Flame attacks.",
+    "cost": 10,
+    "color": "blue",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Always"
+      ]
+    ]
+  },
+  {
+    "name": "Passive Flush",
+    "description": "Damage taken -50% when covering.",
+    "cost": 18,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "In Battle"
+      ]
+    ]
+  },
+  {
+    "name": "Absolute Defense",
+    "description": "Guard rate +20%.",
+    "cost": 42,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "HP",
+        "100%"
+      ]
+    ]
+  },
+  {
+    "name": "Unfulfilled Dream",
+    "description": "Heals 10% HP for every attacker in your Coven.  Does not include yourself.",
+    "cost": 11,
+    "color": "red",
+    "category": "Light of Life",
+    "innate": false,
+    "tags": [
+      [
+        "Alike Excl."
+      ],
+      [
+        "In Battle",
+        1
+      ],
+      [
+        "KO"
+      ]
+    ]
+  },
+  {
+    "name": "Muscle Spasm",
+    "description": "MAX HP +50% in/out of combat, reduces action speed.",
+    "cost": 10,
+    "color": "blue",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Always"
+      ]
+    ]
+  },
+  {
+    "name": "Battle Maniac",
+    "description": "5% chance of special evasion when attacked.  If evasion fails, -20% damage taken.",
+    "cost": 25,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Pos.",
+        "Vanguard"
+      ],
+      [
+        "HP>=",
+        "80%"
+      ]
+    ]
+  },
+  {
+    "name": "Mega Bash",
+    "description": "After being attacked, +800 to stun value for next turn.",
+    "cost": 8,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Atk.",
+        "Katar"
+      ],
+      [
+        "Def.",
+        "Def. Pos."
+      ]
+    ]
+  }
+]

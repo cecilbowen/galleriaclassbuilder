@@ -6,7 +6,7 @@ const MUTE_URL =
   "https://www.flaticon.com/svg/vstatic/svg/727/727240.svg?token=exp=1612409540~hmac=deda99a102e94464d138f23e80db3e62";
 
 const URL =
-  "https://vgmsite.com/soundtracks/labyrinth-of-refrain-coven-of-dusk-original-soundtrack/lnvcmmwdat/2-03%20-%20Witch%27s%20Depression.mp3";
+  "https://vgmsite.com/soundtracks/coven-and-labyrinth-of-galleria-original-soundtrack/aotwhqkkkz/2-12%20Curio%20Gallery.mp3";
 
 const MusicButton = (props) => {
   const [audio, setAudio] = useState(new Audio(URL));

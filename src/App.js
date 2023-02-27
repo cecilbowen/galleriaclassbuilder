@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "./styles.css";
-import * as Classes from "./classes";
-import ClassTable from "./components/ClassTable";
+import * as Classes from "./facets";
+import FacetTable from "./components/FacetTable";
 import {
   newBuild,
   getSkillByName,
-  getClassOrder,
+  getFacetOrder,
   isJsonString,
   Skill,
   getSkillNumberByName,
-  getClassNumber,
-  getClassByNumber,
+  getFacetNumber,
+  getFacetByNumber,
   getSkillByNumber
 } from "./utils";
 import CustomBuild from "./components/CustomBuild";
@@ -19,10 +19,11 @@ import MusicButton from "./components/MusicButton";
 import CharacterPortrait from "./components/CharacterPortrait";
 
 export default function App() {
-  const [myBuild, setMyBuild] = useState(newBuild("My Build"));
+  const [myBuild, setMyBuild] = useState(newBuild("My Build", true));
   const [finalSteps, setFinalSteps] = useState(undefined);
   const [seeDirections, setSeeDirections] = useState(false);
   const [startingSoulClarity, setStartingSoulClarity] = useState(1);
+  const [efficient, setEfficient] = useState(true);
 
   useEffect(() => {
     Classes.initSkills();
@@ -39,7 +40,7 @@ export default function App() {
   }, [startingSoulClarity]);
 
   useEffect(() => {
-    setFinalSteps(getClassOrder(myBuild));
+    setFinalSteps(getFacetOrder(myBuild));
   }, [myBuild]);
 
   useEffect(() => {
@@ -48,11 +49,12 @@ export default function App() {
       clarity = 1;
     }
 
-    let tempBuild = {
+    const tempBuild = {
       skills: myBuild.skills,
       name: myBuild.name,
       soulClarity: clarity,
-      className: myBuild.className
+      facet: myBuild.facet,
+      efficient: efficient
     };
     setMyBuild(tempBuild);
   }, [startingSoulClarity]);
@@ -73,24 +75,22 @@ export default function App() {
 
           let loadedBuild = {
             name: "Loaded S Build",
-            className: getClassByNumber(clsNumber),
+            facet: getFacetByNumber(clsNumber),
             soulClarity,
             skills: skillNumList.split("-").map((num) => {
-              let sk = getSkillByNumber(num);
+              const skill = getSkillByNumber(num);
 
               return {
-                name: sk.name,
-                description: sk.description,
-                innate: sk.innate,
-                color: sk.color,
-                level: sk.level
+                name: skill.name,
+                description: skill.description,
+                facet: skill.facet,
+                innate: skill.innate,
+                color: skill.color,
+                level: skill.level,
+                cost: skill.cost
               };
             })
           };
-
-          for (let i = loadedBuild.skills.length; i < 12; i++) {
-            loadedBuild.skills.push(Skill());
-          }
 
           setMyBuild(loadedBuild);
           return;
@@ -102,31 +102,23 @@ export default function App() {
 
       let newBuild = JSON.parse(newBuildRaw);
 
-      //legacy save
-      if (newBuild.name) {
-        if (newBuild && newBuild.skills) {
-          setMyBuild(newBuild);
-        } else {
-          alert("Invalid legacy build!");
-        }
-
-        return;
-      }
-
       //new save
       let loadedBuild = {
         name: "Loaded Build",
-        className: newBuild.className,
+        facet: newBuild.facet,
         soulClarity: newBuild.soulClarity,
+        efficient: efficient,
         skills: newBuild.skills.map((x) => {
-          let sk = getSkillByName(x);
+          let skill = getSkillByName(x);
 
           return {
-            name: sk.name,
-            description: sk.description,
-            innate: sk.innate,
-            color: sk.color,
-            level: sk.level
+            name: skill.name,
+            description: skill.description,
+            facet: skill.facet,
+            innate: skill.innate,
+            color: skill.color,
+            level: skill.level,
+            cost: skill.cost
           };
         })
       };
@@ -144,7 +136,7 @@ export default function App() {
       .filter((x) => x.name !== "")
       .map((x) => getSkillNumberByName(x.name))
       .join("-");
-    let saveStr = `${getClassNumber(myBuild.className)}_${skillNumberStr}_${
+    let saveStr = `${getFacetNumber(myBuild.facet)}_${skillNumberStr}_${
       myBuild.soulClarity
     }`;
 
@@ -152,12 +144,12 @@ export default function App() {
   };
 
   const renderBaseClasses = () => {
-    return Object.entries(Classes.getAllClasses()).map((clsNameSkills, i) => {
+    return Object.entries(Classes.getAllFacets()).map((clsNameSkills, i) => {
       let clsName = clsNameSkills[0];
       let skills = clsNameSkills[1];
 
       return (
-        <ClassTable
+        <FacetTable
           editBuild={addSkill}
           key={i}
           header={clsName}
@@ -182,7 +174,8 @@ export default function App() {
       skills: myBuild.skills,
       name: myBuild.name,
       soulClarity: startingSoulClarity,
-      className: cls
+      facet: cls,
+      efficient: efficient
     };
 
     setMyBuild(tempBuild);
@@ -192,57 +185,38 @@ export default function App() {
     if (isDuplicateSkill(skill)) return;
 
     let tempBuildSkills = myBuild.skills.slice(0);
-    for (const s of tempBuildSkills) {
-      if (s.name === "") {
-        s.name = skill.name;
-        s.description = skill.description;
-        s.innate = skill.innate;
-        s.color = skill.color;
-        s.level = skill.level;
-        break;
-      }
-    }
+    tempBuildSkills.push({
+      name: skill.name,
+      description: skill.description,
+      facet: skill.facet,
+      innate: skill.innate,
+      color: skill.color,
+      level: skill.level,
+      cost: skill.cost
+    });
 
     let newMyBuild = {
       skills: tempBuildSkills,
       name: myBuild.name,
       soulClarity: startingSoulClarity,
-      className: myBuild.className
+      facet: myBuild.facet,
+      efficient: efficient
     };
 
     setMyBuild(newMyBuild);
   };
 
   const removeSkill = (skill) => {
-    if (skill.name === "") {
-      return;
-    }
-    if (myBuild.skills.filter((x) => x.name !== "").length <= 0) {
-      return;
-    }
-
     let tempBuildSkills = myBuild.skills
       .slice(0)
       .filter((x) => x.name !== skill.name);
-    for (
-      let i = 0;
-      i < Math.abs(myBuild.skills.length - tempBuildSkills.length);
-      i++
-    ) {
-      tempBuildSkills.push({
-        name: "",
-        description: "",
-        innate: false,
-        color: "white",
-        level: 0
-      });
-    }
 
     let newMyBuild = {
       skills: tempBuildSkills,
       name: myBuild.name,
       soulClarity: startingSoulClarity,
-      className: myBuild.className
+      facet: myBuild.facet,
+      efficient: efficient
     };
 
     setMyBuild(newMyBuild);
@@ -253,7 +227,7 @@ export default function App() {
       <div style={{ width: "60vw" }}>{renderBaseClasses()}</div>
       <div className="CustomBuild">
         <CustomBuild
-          customClass={myBuild.className}
+          customClass={myBuild.facet}
           editBuild={removeSkill}
           changeClass={changeClass}
           skills={myBuild.skills}
@@ -261,7 +235,7 @@ export default function App() {
         />
       </div>
       <Directions steps={finalSteps} hide={!seeDirections} />
-      <CharacterPortrait className={myBuild.className} />
+      {/*<CharacterPortrait className={myBuild.facet} />*/}
       <div className={"ButtonsDiv"}>
         <button
           className={"ToggleButton"}

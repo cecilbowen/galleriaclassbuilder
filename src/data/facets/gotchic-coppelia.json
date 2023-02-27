@@ -1,0 +1,226 @@
+[
+  {
+    "name": "Double Strike",
+    "description": "Adds 50% chance to attack twice.",
+    "cost": 50,
+    "color": "red",
+    "category": false,
+    "innate": "Gothic Coppelia",
+    "tags": [
+      [
+        "Equip",
+        "Master S+ 2h"
+      ],
+      [
+        "Atk."
+      ]
+    ]
+  },
+  {
+    "name": "Iron Arm Spin",
+    "description": "Increases critical damage by 50%.  However, greatly reduces Rapport with adjacent puppet soldiers.",
+    "cost": 50,
+    "color": "red",
+    "category": false,
+    "innate": "Gothic Coppelia",
+    "tags": [
+      [
+        "Pos.",
+        "Vanguard"
+      ],
+      [
+        "Equip",
+        "Master S+ Weapon"
+      ],
+      [
+        "Atk."
+      ]
+    ]
+  },
+  {
+    "name": "Maverick",
+    "description": "Number of causal factors affects amount of critical hits.",
+    "cost": 10,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "In Battle"
+      ]
+    ]
+  },
+  {
+    "name": "Self-Destruct",
+    "description": "Self-destructs, dealing Stun damage to all enemies.  All parts will be lost.",
+    "cost": 10,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "KO",
+        "By Foe"
+      ]
+    ]
+  },
+  {
+    "name": "Dismemberer",
+    "description": "When a critical hits, 80% chance of small increase in Gore rate.",
+    "cost": 23,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Atk.",
+        "Critical"
+      ]
+    ]
+  },
+  {
+    "name": "Hypnotic Eye",
+    "description": "+50% chance for an attack to gain Illusion effect.",
+    "cost": 40,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Atk.",
+        "HIT"
+      ]
+    ]
+  },
+  {
+    "name": "Full Recovery",
+    "description": "Slightly increases recovery speed of all status effects.",
+    "cost": 12,
+    "color": "blue",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Always"
+      ]
+    ]
+  },
+  {
+    "name": "Font of Power",
+    "description": "Next turn attack +25%, Stun +1600.",
+    "cost": 20,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Def.",
+        "Def. Pos."
+      ]
+    ]
+  },
+  {
+    "name": "Tenacious Strength",
+    "description": "STR +35%. Affects Attack.",
+    "cost": 10,
+    "color": "blue",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Always"
+      ]
+    ]
+  },
+  {
+    "name": "Merciless Blow",
+    "description": "Critical value +100.",
+    "cost": 20,
+    "color": "red",
+    "category": "Merciless Blow",
+    "innate": false,
+    "tags": [
+      [
+        "Alike Excl."
+      ],
+      [
+        "Atk.",
+        "Stunned Foe"
+      ]
+    ]
+  },
+  {
+    "name": "Super Strength",
+    "description": "+5% counter chance when attacked in weapon range.  -Counter HIT, +Gore rate on crits.  1 hit.",
+    "cost": 6,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Equip",
+        "Master S+ 2h"
+      ],
+      [
+        "Atk."
+      ]
+    ]
+  },
+  {
+    "name": "Hoarder's Strike",
+    "description": "Slight increase in Gore rate on critical hits.",
+    "cost": 8,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "HP<=",
+        "30%"
+      ]
+    ]
+  },
+  {
+    "name": "Anti-Donum Heresy",
+    "description": "Attack +20%.  Increases a Coven's DP consumption by +25%.",
+    "cost": 5,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Atk."
+      ]
+    ]
+  },
+  {
+    "name": "Analyst",
+    "description": "Adds +40% learning chance when attacked.",
+    "cost": 20,
+    "color": "red",
+    "category": "Analyst",
+    "innate": false,
+    "tags": [
+      [
+        "Alike Excl."
+      ]
+    ]
+  },
+  {
+    "name": "Shock Wave",
+    "description": "Ignores 25% of target's Defense.",
+    "cost": 15,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "HP",
+        "100%"
+      ],
+      [
+        "Atk."
+      ]
+    ]
+  }
+]

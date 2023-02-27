@@ -1,0 +1,232 @@
+[
+  {
+    "name": "Cat's Eye",
+    "description": "Adds +30% learning chance to non-hit actions.",
+    "cost": 50,
+    "color": "red",
+    "category": false,
+    "innate": "Famyu Chaser",
+    "tags": [
+      [
+        "LUC",
+        "Fortune"
+      ]
+    ]
+  },
+  {
+    "name": "Lucky Eyes",
+    "description": "Increases item drop rate while still alive.",
+    "cost": 50,
+    "color": "red",
+    "category": false,
+    "innate": "Famyu Chaser",
+    "tags": [
+      [
+        "Pos.",
+        "Attacker"
+      ],
+      [
+        "End Battle"
+      ],
+      [
+        "No Stack"
+      ]
+    ]
+  },
+  {
+    "name": "Support Attack",
+    "description": "Increases Resonance rate.",
+    "cost": 17,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Pos.",
+        "Attacker"
+      ],
+      [
+        "HP>=",
+        "75%"
+      ]
+    ]
+  },
+  {
+    "name": "Aerial Recon",
+    "description": "Adds +10% HIT to attackers in your Coven.",
+    "cost": 36,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Pos.",
+        "Supporter"
+      ]
+    ]
+  },
+  {
+    "name": "New Breath",
+    "description": "Restores 1% of HP.",
+    "cost": 7,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "HP<=",
+        "75%"
+      ],
+      [
+        "Turn End"
+      ]
+    ]
+  },
+  {
+    "name": "Lucky Shine",
+    "description": "Increases attackers' LUC in a brigade.",
+    "cost": 50,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Pos.",
+        "Attacker"
+      ],
+      [
+        "Stack"
+      ]
+    ]
+  },
+  {
+    "name": "Surrogate",
+    "description": "When a fellow attacker is killed by instant death, it sacrifices itself to revive the ally.",
+    "cost": 20,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "In Battle",
+        1
+      ],
+      [
+        "Pos.",
+        "Supporter"
+      ]
+    ]
+  },
+  {
+    "name": "Superb Focus",
+    "description": "HIT +300% for next turn.",
+    "cost": 80,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Def.",
+        "Def. Pos."
+      ]
+    ]
+  },
+  {
+    "name": "Wild Escape",
+    "description": "Wild Escape Donum.  Allows you to flee.  When activated, significantly increases chance to escape.",
+    "cost": 10,
+    "color": "blue",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Learn"
+      ]
+    ]
+  },
+  {
+    "name": "Hunter's Talons",
+    "description": "Improves scythe proficiency by 6 levels.",
+    "cost": 23,
+    "color": "blue",
+    "category": "Scythe Master",
+    "innate": false,
+    "tags": [
+      [
+        "Alike Excl."
+      ]
+    ]
+  },
+  {
+    "name": "Thrust",
+    "description": "AVD +50%, Critical value +10.",
+    "cost": 24,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Luc>=",
+        "Fortune"
+      ]
+    ]
+  },
+  {
+    "name": "Cornered Rat Power",
+    "description": "AVD -80%, HIT +150%.",
+    "cost": 15,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "HP<=",
+        "10%"
+      ]
+    ]
+  },
+  {
+    "name": "Intuitive Guard",
+    "description": "Guard rate +5%.",
+    "cost": 9,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Luc>=",
+        "Fortune"
+      ]
+    ]
+  },
+  {
+    "name": "Wild Scent Removal",
+    "description": "Less likely to be targeted by enemies.",
+    "cost": 4,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Pos.",
+        "Rearguard"
+      ],
+      [
+        "Turn End"
+      ]
+    ]
+  },
+  {
+    "name": "Lonely Fighter",
+    "description": "Increases AVD by +25% while the same facet is not an attacker in the same brigade (ignoring gender differences).",
+    "cost": 15,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "In Battle"
+      ]
+    ]
+  }
+]

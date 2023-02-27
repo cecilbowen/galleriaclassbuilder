@@ -1,0 +1,220 @@
+[
+  {
+    "name": "Protective Heart",
+    "description": "When attacker in brigade is attacked, 10% chance to be covered, +8% per katar equipped.",
+    "cost": 50,
+    "color": "red",
+    "category": false,
+    "innate": "Peer Fortress",
+    "tags": [
+      [
+        "In Battle"
+      ]
+    ]
+  },
+  {
+    "name": "Mega-High Bash",
+    "description": "Increases stun value by # times attacked in defensive formation x800 for next attack.",
+    "cost": 50,
+    "color": "red",
+    "category": false,
+    "innate": "Peer Fortress",
+    "tags": [
+      [
+        "Equip",
+        "Katar"
+      ],
+      [
+        "Def.",
+        "Def. Pos."
+      ]
+    ]
+  },
+  {
+    "name": "Siege Shield",
+    "description": "Restores 5% of HP.",
+    "cost": 20,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Def.",
+        "Def. Pos."
+      ]
+    ]
+  },
+  {
+    "name": "Tortoise Shell",
+    "description": "Increases DEF when using Fortify Coven.  +5% DEF for each subsequent turn.",
+    "cost": 12,
+    "color": "red",
+    "category": "Tortoise Shell",
+    "innate": false,
+    "tags": [
+      [
+        "Alike Excl."
+      ],
+      [
+        "Def.",
+        "Def. Pos."
+      ],
+      [
+        "Max",
+        "150%"
+      ]
+    ]
+  },
+  {
+    "name": "Unbreakable",
+    "description": "Guard Rate +10%.  Makes it easier to guard against enemy attacks.",
+    "cost": 30,
+    "color": "red",
+    "category": "Unbreakable",
+    "innate": false,
+    "tags": [
+      [
+        "Alike Excl."
+      ]
+    ]
+  },
+  {
+    "name": "Tenacious Stamina",
+    "description": "CON +35%.  Affects Defense.",
+    "cost": 10,
+    "color": "blue",
+    "category": "Body Modification",
+    "innate": false,
+    "tags": [
+      [
+        "Alike Excl."
+      ]
+    ]
+  },
+  {
+    "name": "Gatekeeper's Proof",
+    "description": "Gatekeeper's Proof Donum.  Provokes enemies.  Adds 80% chance to provoke, 75% damage.",
+    "cost": 10,
+    "color": "blue",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Learn"
+      ]
+    ]
+  },
+  {
+    "name": "Contra-Bash",
+    "description": "75% to stun attacker when guarding in weapon range.  Stun value +2600, 50% to counter damage.",
+    "cost": 38,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Equip",
+        "Master S+ Katar"
+      ],
+      [
+        "Def.",
+        "Def. Pos."
+      ]
+    ]
+  },
+  {
+    "name": "Bulwark",
+    "description": "Guard Rate +15%.  Makes it easier to guard against enemy attacks.",
+    "cost": 45,
+    "color": "red",
+    "category": "Unbreakable",
+    "innate": false,
+    "tags": [
+      [
+        "Alike Excl."
+      ]
+    ]
+  },
+  {
+    "name": "Slash Res. Up",
+    "description": "Slash Resistance +15.  Enhances Resistance to Slash attacks.",
+    "cost": 10,
+    "color": "blue",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Always"
+      ]
+    ]
+  },
+  {
+    "name": "Stench Res. Up",
+    "description": "Stench Resistance +25.  Enhances Resistance to Stench.",
+    "cost": 10,
+    "color": "blue",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Always"
+      ]
+    ]
+  },
+  {
+    "name": "Solidify",
+    "description": "Defense +10%.",
+    "cost": 5,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "HP>=",
+        "80%"
+      ]
+    ]
+  },
+  {
+    "name": "Katar Master",
+    "description": "Improves katar proficiency by 4 levels.",
+    "cost": 15,
+    "color": "blue",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "Always"
+      ]
+    ]
+  },
+  {
+    "name": "Rear",
+    "description": "Last to act in a brigade.",
+    "cost": 10,
+    "color": "red",
+    "category": false,
+    "innate": false,
+    "tags": [
+      [
+        "In Battle"
+      ]
+    ]
+  },
+  {
+    "name": "Hidden Star",
+    "description": "Increases Rapport gain and loss by 1.5x.",
+    "cost": 15,
+    "color": "red",
+    "category": "Love, Hate, Love",
+    "innate": false,
+    "tags": [
+      [
+        "Alike Excl."
+      ],
+      [
+        "In Battle"
+      ]
+    ]
+  }
+]
