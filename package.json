@@ -1,6 +1,7 @@
 {
   "name": "galleria-class-builder",
   "version": "1.0.0",
+  "homepage": "https://cecilbowen.github.io/galleriaclassbuilder",
   "description": "",
   "keywords": [],
   "main": "src/index.js",

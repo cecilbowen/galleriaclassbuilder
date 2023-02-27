@@ -304,6 +304,7 @@ export default function App() {
           <option label="Divine Soul" value="12"></option>
         </datalist>
         <MusicButton />
+        <small><a href="https://github.com/cecilbowen/galleriaclassbuilder">Source Code</a></small>
       </div>
     </div>
   );
