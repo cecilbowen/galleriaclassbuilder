@@ -30,8 +30,16 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (startingSoulClarity > 99) {
-      setStartingSoulClarity(99);
+    const tempBuild = {
+      ...myBuild,
+      efficient: efficient
+    };
+    setMyBuild(tempBuild);
+  }, [efficient]);
+
+  useEffect(() => {
+    if (startingSoulClarity > 999) {
+      setStartingSoulClarity(999);
     }
 
     if (isNaN(startingSoulClarity)) {
@@ -237,6 +245,12 @@ export default function App() {
       <Directions steps={finalSteps} hide={!seeDirections} />
       {/*<CharacterPortrait className={myBuild.facet} />*/}
       <div className={"ButtonsDiv"}>
+        {seeDirections && <button
+          className={"ModeButton"}
+          onClick={() => setEfficient(!efficient)}
+        >
+          {efficient ? "Mode: Efficient" : "Mode: Quickest"}
+        </button>}
         <button
           className={"ToggleButton"}
           onClick={() => setSeeDirections(!seeDirections)}
@@ -278,7 +292,7 @@ export default function App() {
           style={{ width: "8em", marginLeft: "1em" }}
           value={startingSoulClarity}
           min={1}
-          max={99}
+          max={999}
           onChange={(ev) =>
             setStartingSoulClarity(parseInt(ev.currentTarget.value, 10))
           }

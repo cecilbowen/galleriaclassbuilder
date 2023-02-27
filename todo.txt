@@ -1,0 +1,4 @@
+add a clear button
+click on facet names from left tables to "quick change" target facet (so don't have to cycle to get to it)
+clean up ui
+clean up code (comments, using maps when cleaner to use arrays, etc)

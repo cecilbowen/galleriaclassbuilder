@@ -37,6 +37,18 @@ const CLARITY_STOPS = [
   99
 ];
 
+export const DISCOUNTS = {
+  "unique": "-100%",
+  "initial": "-75%",
+  "class": "-66%",
+};
+
+export const DISCOUNT_COLORS = {
+  "unique": "#ff8dc6",
+  "initial": "#83f183",
+  "class": "#fce3d7",
+}
+
 const getSoulClarityIncreaseFromLevel = (level) => {
   if (level > 99) {
     console.warn("Level > 99 passed to getSoulClarityIncreaseFromLevel()");
@@ -147,12 +159,12 @@ export const getFacetOrder = build => {
 
   // make highest costing skill in target facet be unique chosen skill (free)
   const targetFacet = ascLevel.filter(x => x[0] === build.facet)[0];
-  const moneySkill = targetFacet[1]?.skills.slice(0).sort((a, b) => {
+  const moneySkill = targetFacet[1]?.skills.slice(0).filter(x => !x.innate).sort((a, b) => {
     return b.cost - a.cost;
   })[0];
   if (moneySkill) {
     // moneySkill.learn = true;
-    targetFacet[1].skills = [{...moneySkill, learn: true}, ...targetFacet[1].skills.sort((a, b) => {
+    targetFacet[1].skills = [{...moneySkill, learn: true, level: 0}, ...targetFacet[1].skills.sort((a, b) => {
       return b.cost - a.cost;
     }).filter(x => x.name !== moneySkill.name)];    
   }
@@ -160,10 +172,13 @@ export const getFacetOrder = build => {
 
   // handle efficient route if active
   let reOrdered = ascLevel.slice(0);
+  let appendFacet;
   console.log("build", build);
-  if (build.efficient) {
+  if (build.efficient && reOrdered.length > 1) {
     let mostExpensiveFacet = ascLevel[0];
+    let secondMostExpensiveFacet;
     let mostCost = 0;
+    let secondMostCost = 0;
     if (mostExpensiveFacet) {
       mostExpensiveFacet = mostExpensiveFacet[0];
 
@@ -172,28 +187,55 @@ export const getFacetOrder = build => {
         const facet = mapEntry[1];
         let facetCostSum = 0;
         for (const sk of facet.skills) {
-          if (facetName === targetFacet[0] && sk.innate) {
-            continue;
+          if (facetName === targetFacet[0]) {
+            if (sk.innate || sk.learn) { continue; }
           }
           facetCostSum += sk.cost;
         }
 
+        // console.log(`${facetName} total cost, pre discount: ${facetCostSum}`);
         if (facetCostSum > mostCost) {
+          secondMostCost = mostCost;
           mostCost = facetCostSum;
+          secondMostExpensiveFacet = mostExpensiveFacet;
           mostExpensiveFacet = facetName;
         }
       }
 
-      console.log("most expensive facet", mostExpensiveFacet);
+      console.log(`${mostExpensiveFacet} is the most expensive at ${mostCost}.`);
+      console.log(`${secondMostExpensiveFacet} is next expensive at ${secondMostCost}.`);
+
+      if (mostExpensiveFacet === targetFacet[0]) {
+        const noClassDiscount = mostCost - Math.floor(mostCost * .75) + secondMostCost;
+        const classDiscount = (mostCost - Math.floor(mostCost * .66)) + (secondMostCost - Math.floor(secondMostCost * .75));
+
+        if (classDiscount < noClassDiscount) {
+          console.log("more efficient to get both CLASS and INITIAL discounts");
+          mostExpensiveFacet = secondMostExpensiveFacet;
+        }
+      }
 
       // put most expensive facet at beginning for the INITIAL discount
       const moneyFacet = ascLevel.filter(x => x[0] === mostExpensiveFacet)[0];
+      const uniques = moneyFacet[1].skills.filter(x => x.innate || x.learn);
+      moneyFacet[1].skills = moneyFacet[1].skills.filter(x => !x.innate && !x.learn).sort((a, b) => {
+        return a.level - b.level;
+      });
       moneyFacet[1].order = 350;
       reOrdered = [moneyFacet, ...ascLevel.filter(x => x[0] !== mostExpensiveFacet)];
 
       if (mostExpensiveFacet === targetFacet[0]) {
         // so now we need a split of the target facet
         // one at the beginning to get the INITIAL discount, and one at the end
+        // the one at the end will just have any unique skills to be learned, if any, since they're free
+        appendFacet = {
+          //totalLevel, transferLevel, soulClarity
+          facet: targetFacet[0],
+          skills: uniques.sort((a, b) => {
+            return a.level - b.level;
+          }),
+          order: 999
+        }
       }
     }
   }
@@ -209,9 +251,23 @@ export const getFacetOrder = build => {
 
   console.log("facetsByOrder", facetsByOrder);
 
-  let finalSteps = {
+  const steps = [];
+  for (const [facetName, s] of facetsByOrder.entries()) {
+    s.facet = facetName;
+    steps.push(s);
+  }
+  steps.sort((a, b) => {
+    return a.order - b.order;
+  });
+
+  if (appendFacet) {
+    steps.push(appendFacet);
+  }
+
+  let finalSteps = [
     /*
-    facet: {
+    {
+      facet: facetName,
       order: x,
       skills: [{
         name: "",
@@ -219,18 +275,29 @@ export const getFacetOrder = build => {
       }]
     }
     */
-  };
+  ];
 
+  console.log("daSteps", steps);
   let totalLevel = 0;
   let soulClarity = build.soulClarity;
-  for (const [clsName, obj] of facetsByOrder.entries()) {
-    finalSteps[clsName] = finalSteps[clsName] || {
-      skills: []
-    };
-
+  const initialFacet = steps[0].facet;
+  const lastFacet = steps[steps.length - 1].facet;
+  for (const step of steps) {
     let skills = [];
-    for (const skill of obj.skills) {
+    for (const skill of step.skills) {
       if (!skill) continue;
+
+      let discount;
+      if (skill.facet === lastFacet) {
+        discount = "class";
+      }
+      if (skill.facet === initialFacet) {
+        discount = "initial";
+      }
+      if ((skill.innate || skill.learn) && skill.facet === targetFacet[0]) {
+        discount = "unique";
+      }
+
       skills.push({
         name: skill.name,
         description: skill.description,
@@ -239,7 +306,8 @@ export const getFacetOrder = build => {
         color: skill.color,
         level: skill.level,
         cost: skill.cost,
-        learn: skill.learn
+        learn: skill.learn,
+        discount,
       });
     }
 
@@ -248,30 +316,31 @@ export const getFacetOrder = build => {
     transferLevel = Math.min(99, transferLevel);
     totalLevel += transferLevel;
 
-    finalSteps[clsName] = {
-      order: obj.order,
+    finalSteps.push({
+      facet: step.facet,
+      order: step.order,
       skills,
       transferLevel,
       totalLevel,
       soulClarity
-    };
+    });
 
     soulClarity += getSoulClarityIncreaseFromLevel(transferLevel);
     soulClarity = Math.min(99, soulClarity);
   }
 
-  let finalStepsPreSorted = [...Object.entries(finalSteps)].sort((a, b) => {
-    return a[1].order - b[1].order;
+  let finalStepsPreSorted = finalSteps.sort((a, b) => {
+    return a.order - b.order;
   });
 
-  let finalStepsSorted = new Map([
-    ...finalStepsPreSorted.filter((elem) => elem[0] !== build.facet),
-    ...finalStepsPreSorted.filter((elem) => elem[0] === build.facet)
-  ]);
+  for (const step of finalStepsPreSorted) {
+    step.skills.sort((a, b) => {
+      return a.level - b.level;
+    });
+  }
 
-  console.log("finalSteps, finalStepsPreSorted, finalStepsSorted", finalSteps, finalStepsPreSorted, finalStepsSorted);
-
-  return finalStepsSorted;
+  console.log("finalSteps", finalStepsPreSorted);
+  return finalStepsPreSorted;
 };
 
 export const getFacetSkillsFromBuild = (build, facetName) => {
@@ -305,6 +374,33 @@ export const isJsonString = (str) => {
 
   return true;
 };
+
+export const isInExclusiveCategory = (skillAA, skillBB) => {
+  const skillA = getSkillByName(skillAA.name);
+  const skillB = getSkillByName(skillBB.name);
+  console.log("skillA cat, skillB cat", skillA.category, skillB.category);
+  return skillA.category && skillA.category === skillB.category;
+};
+
+export const getSkillDiscountedCost = skill => {
+  let discount = 0;
+  switch (skill.discount) {
+    case "unique": discount = 1; break;
+    case "initial": discount = .75; break;
+    case "class": discount = .66; break;
+    default: discount = 0; break;
+  }
+
+  return skill.cost - Math.floor(discount * skill.cost);
+};
+
+export const getSkillPointsAddedFromSoulClarity = soulClarity => {
+  if (soulClarity <= 99) {
+    return soulClarity - 1;
+  }
+
+  return Math.floor(soulClarity / 10) - 9 + 98;
+}
 
 const getLevelForSkillTransfer = skills => {
   let highest = 0;

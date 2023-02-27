@@ -90,25 +90,9 @@ const CustomBuild = (props) => {
     );
   };
 
-  let warningText = `Note: Must choose a minimum of 4 ${customClass} skills!`;
-  let notEnoughTargetClassSkills = false;
-  let emptySlots = props.skills.filter((x) => x.name === "").length;
-  if (emptySlots < 4) {
-    let targetClassSkills = getFacetSkillsFromBuild(
-      { skills: props.skills },
-      customClass
-    );
-    if (targetClassSkills.length + emptySlots < 4) {
-      notEnoughTargetClassSkills = true;
-    }
-  }
-
   return (
     <div style={{ display: props.hide ? "none" : "" }}>
       {renderTable(props.skills)}
-      {notEnoughTargetClassSkills && (
-        <div className="SkillFrame Warning-box">{warningText}</div>
-      )}
     </div>
   );
 };

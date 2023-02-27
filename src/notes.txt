@@ -38,5 +38,6 @@ Skill Point Cost Discounts
     INITIAL: skills starting class learned -> 75% discount
     CLASS: skills learned by current class -> 66% discount
     NONE: skills that don't fit any of the other criteria -> 0% discount (full price)
+    formula -> discountedCost = cost - Math.floor(cost * discountPercentage)
 
 alike exclude skills belong to a category of similar skills that do not stack and cannot even be applied at the same time
