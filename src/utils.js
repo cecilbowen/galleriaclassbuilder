@@ -218,7 +218,7 @@ export const getFacetOrder = build => {
       // put most expensive facet at beginning for the INITIAL discount
       const moneyFacet = ascLevel.filter(x => x[0] === mostExpensiveFacet)[0];
       const uniques = moneyFacet[1].skills.filter(x => x.innate || x.learn);
-      moneyFacet[1].skills = moneyFacet[1].skills.filter(x => !x.innate && !x.learn).sort((a, b) => {
+      moneyFacet[1].skills = moneyFacet[1].skills.filter(x => (!x.innate || x.facet !== targetFacet[0]) && !x.learn).sort((a, b) => {
         return a.level - b.level;
       });
       moneyFacet[1].order = 350;

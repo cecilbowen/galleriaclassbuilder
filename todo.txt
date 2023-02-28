@@ -1,4 +1,7 @@
 add a clear button
+add a "now that you've gotten all the skills you want, you need to soul transfer to the same
+  class X number of times to have enough skill points to use all your desired skills" indicator on
+  skill point screen
 click on facet names from left tables to "quick change" target facet (so don't have to cycle to get to it)
 clean up ui
 clean up code (comments, using maps when cleaner to use arrays, etc)
