@@ -64,7 +64,7 @@ export const initSkills = () => {
 
 export const getAllFacets = () => {
   let allFacets = {};
-  var facetName;
+  let facetName;
   for (const skill of SKILLS) {
     if (!facetName || facetName !== skill.facet) {
       facetName = skill.facet;

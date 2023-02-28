@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-const PLAY_URL =
-  "https://www.flaticon.com/svg/vstatic/svg/59/59284.svg?token=exp=1612409540~hmac=2dd451b4b9c0c1a538f4ecba247a3503";
-const MUTE_URL =
-  "https://www.flaticon.com/svg/vstatic/svg/727/727240.svg?token=exp=1612409540~hmac=deda99a102e94464d138f23e80db3e62";
-
 const URL =
   "https://vgmsite.com/soundtracks/coven-and-labyrinth-of-galleria-original-soundtrack/aotwhqkkkz/2-12%20Curio%20Gallery.mp3";
 
-const MusicButton = (props) => {
-  const [audio, setAudio] = useState(new Audio(URL));
+const MusicButton = props => {
+  const [audio, ] = useState(new Audio(URL));
   const [playing, setPlaying] = useState(false);
   const [volume, setVolume] = useState(0.1);
 
@@ -29,14 +24,7 @@ const MusicButton = (props) => {
 
   return (
     <div>
-      <button
-        onClick={() => setPlaying(!playing)}
-        style={
-          {
-            //backgroundImage: playing ? `url(${PLAY_URL}` : `url(${MUTE_URL}`
-          }
-        }
-      >
+      <button onClick={() => setPlaying(!playing)}>
         {playing ? "Pause" : "Play"}
       </button>
       <input
@@ -46,7 +34,7 @@ const MusicButton = (props) => {
         max={"1"}
         min={"0"}
         step={"0.05"}
-        onChange={(ev) => setVolume(ev.currentTarget.value)}
+        onChange={ev => setVolume(ev.currentTarget.value)}
         style={{ verticalAlign: "top" }}
       />
     </div>

@@ -1,16 +1,9 @@
 import React, { useState } from "react";
-import * as Classes from "../facets";
 import { getFacetColor } from "../utils";
+import PropTypes from 'prop-types';
 
-/*
-props:
-  skills = class map
-  header = class name (optional)
-  editBuild = (skill)
-*/
-
-const FacetTable = (props) => {
-  const [color] = useState(getFacetColor(props.header));
+const FacetTable = ({ header, editBuild, skills }) => {
+  const [color] = useState(getFacetColor(header));
 
   const renderTableRow = (skill, index) => {
     const tags = skill.tags.map(x => `${x.join(" ")}`);
@@ -19,7 +12,7 @@ const FacetTable = (props) => {
       <tr
         key={`tr-${index}`}
         className={"FacetTable-row"}
-        onClick={() => props.editBuild(skill)}
+        onClick={() => editBuild(skill)}
         title={`Learn at Level ${skill.level}`}
       >
         <td className={"SkillFrame"}>
@@ -29,7 +22,7 @@ const FacetTable = (props) => {
         <td className={"SkillFrame"}>{skill.cost}</td>
         <td className={"SkillFrame"}>
           <div className="tags">
-            {tags.map(x => <div className="tag">{x}</div>)}
+            {tags.map((x, i) => <div key={`skillframe-tag-${i}`} className="tag">{x}</div>)}
           </div>
           {skill.description}
         </td>
@@ -37,30 +30,36 @@ const FacetTable = (props) => {
     );
   };
 
-  const renderTable = (skills) => {
-    let headerColor = `linear-gradient(${color} -40%, #212c2f 80%, #212c2f 10%)`;
+  const renderTable = tableSkills => {
+    const headerColor = `linear-gradient(${color} -40%, #212c2f 80%, #212c2f 10%)`;
 
     return (
       <table className={"FacetTable"}>
         <tbody className={"FacetTable-body"}>
-          {props.header && (
+          {header &&
             <tr className={"FacetTable-header"}>
               <th
                 className={"SkillFrame-header"}
                 colSpan={"3"}
                 style={{ backgroundImage: headerColor }}
               >
-                {props.header}
+                {header}
               </th>
             </tr>
-          )}
-          {skills.map((skill, i) => renderTableRow(skill, i))}
+          }
+          {tableSkills.map((skill, i) => renderTableRow(skill, i))}
         </tbody>
       </table>
     );
   };
 
-  return renderTable(props.skills);
+  return renderTable(skills);
+};
+
+FacetTable.propTypes = {
+  header: PropTypes.string,
+  editBuild: PropTypes.func,
+  skills: PropTypes.array
 };
 
 export default FacetTable;

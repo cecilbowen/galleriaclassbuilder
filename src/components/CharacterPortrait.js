@@ -1,19 +1,9 @@
 import React, { useState, useEffect } from "react";
-import * as Classes from "../facets";
+import { names } from "../facets";
+import PropTypes from 'prop-types';
 
-/*
-props:
-  className - name of character's class
-
-  asterKnight,
-  marginalMaze,
-  shinobushi,
-  peerFortress,
-  theatricalStar,
-  madRaptor,
-  gothicCoppelia,
-  demonReaper
-*/
+// unused for now because of lack of galleria sprites online, but
+// may be used again in future
 
 const asterKnight = ["./images/asterKnight.png"];
 const marginalMaze = ["./images/marginalMaze.png"];
@@ -35,17 +25,17 @@ const images = [
   demonReaper
 ];
 
-const CharacterPortrait = (props) => {
+const CharacterPortrait = ({ facetName }) => {
   const [backgroundImage, setBackgroundImage] = useState();
 
-  useEffect(() => {
-    setBackgroundImage(grabCharacterPortrait(props.facet));
-  }, [props.facet]);
-
-  const grabCharacterPortrait = (className) => {
-    let index = Classes.names.indexOf(className);
+  const grabCharacterPortrait = () => {
+    const index = names.indexOf(facetName);
     return images[index][Math.floor(Math.random() * images[index].length)];
   };
+
+  useEffect(() => {
+    setBackgroundImage(grabCharacterPortrait());
+  }, [facetName]);
 
   return (
     <div
@@ -53,6 +43,10 @@ const CharacterPortrait = (props) => {
       style={{ backgroundImage: `url(${backgroundImage})` }}
     ></div>
   );
+};
+
+CharacterPortrait.propTypes = {
+  facetName: PropTypes.string
 };
 
 export default CharacterPortrait;

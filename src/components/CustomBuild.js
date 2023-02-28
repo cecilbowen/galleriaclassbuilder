@@ -1,58 +1,50 @@
 import React, { useEffect, useState } from "react";
-import * as Classes from "../facets";
-import { getFacetColor, getFacetSkillsFromBuild } from "../utils";
+import { colors, names } from "../facets";
+import { getFacetColor } from "../utils";
+import PropTypes from 'prop-types';
 
-/*
-props:
-  customClass - build class name
-  editBuild - add/remove skill func
-  changeClass - change class func
-  skills - build skills
-  hide - whether or not to show
-*/
-
-const CustomBuild = (props) => {
-  const [customClass, setCustomClass] = useState(Classes.names[0]);
-  const [customColor, setCustomColor] = useState(Classes.colors[0]);
+const CustomBuild = ({ changeClass, facetName, editBuild, hide, skills }) => {
+  const [customClass, setCustomClass] = useState(names[0]);
+  const [customColor, setCustomColor] = useState(colors[0]);
 
   useEffect(() => {
-    if (customClass !== props.customClass) {
-      setCustomClass(props.customClass);
+    if (customClass !== facetName) {
+      setCustomClass(facetName);
     }
-  }, [props.customClass]);
+  }, [facetName]);
 
   useEffect(() => {
     setCustomColor(getFacetColor(customClass));
-    props.changeClass(customClass);
+    changeClass(customClass);
   }, [customClass]);
 
   const cycleClass = () => {
-    let currentClassIndex = Classes.names.indexOf(customClass);
+    let currentClassIndex = names.indexOf(customClass);
     currentClassIndex++;
-    if (currentClassIndex > Classes.names.length - 1) {
+    if (currentClassIndex > names.length - 1) {
       currentClassIndex = 0;
     }
 
-    setCustomClass(Classes.names[currentClassIndex]);
+    setCustomClass(names[currentClassIndex]);
   };
 
   const renderCell = (data, style) => {
     return (
-      <td style={style || {}} className={"SkillFrame CustomBuild-cell"}>
+      <td style={style || {}} className={"SkillFrame CustomBuild-cell noselect"}>
         {data}
       </td>
     );
   };
 
   const renderTableRow = (rowData, index, result) => {
-    let cellColor = `linear-gradient(${rowData.color} -50%, #212c2f 60%, #212c2f 10%)`;
-    let style = rowData.name === "" ? {} : { backgroundImage: cellColor };
+    const cellColor = `linear-gradient(${rowData.color} -50%, #212c2f 60%, #212c2f 10%)`;
+    const style = rowData.name === "" ? {} : { backgroundImage: cellColor };
 
     return (
       <tr
         key={`tr-${index}`}
         className={result ? "FacetResultTable-row" : "FacetTable-row"}
-        onClick={() => props.editBuild(rowData)}
+        onClick={() => editBuild(rowData)}
       >
         {renderCell(rowData.name + (rowData.innate ? " (Innate)" : ""), style)}
         {renderCell(rowData.description, style)}
@@ -60,14 +52,14 @@ const CustomBuild = (props) => {
     );
   };
 
-  const renderTable = (tableData) => {
-    let headerColor = `linear-gradient(${customColor} -40%, #212c2f 80%, #212c2f 10%)`;
+  const renderTable = tableData => {
+    const headerColor = `linear-gradient(${customColor} -40%, #212c2f 80%, #212c2f 10%)`;
 
-    let cycleTooltip = (
+    const cycleTooltip =
       <div style={{ fontSize: "8px", textDecoration: "underline" }}>
         (Click to Cycle Class)
       </div>
-    );
+    ;
 
     return (
       <table className={"FacetResultTable"}>
@@ -91,10 +83,18 @@ const CustomBuild = (props) => {
   };
 
   return (
-    <div style={{ display: props.hide ? "none" : "" }}>
-      {renderTable(props.skills)}
+    <div style={{ display: hide ? "none" : "" }}>
+      {renderTable(skills)}
     </div>
   );
+};
+
+CustomBuild.propTypes = {
+  changeClass: PropTypes.func,
+  facetName: PropTypes.string,
+  editBuild: PropTypes.func,
+  hide: PropTypes.bool,
+  skills: PropTypes.array
 };
 
 export default CustomBuild;

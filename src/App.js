@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./styles.css";
-import * as Classes from "./facets";
+import { initSkills, getAllFacets } from "./facets";
 import FacetTable from "./components/FacetTable";
 import {
   newBuild,
   getSkillByName,
   getFacetOrder,
   isJsonString,
-  Skill,
+  newSkill,
   getSkillNumberByName,
   getFacetNumber,
   getFacetByNumber,
@@ -16,7 +16,6 @@ import {
 import CustomBuild from "./components/CustomBuild";
 import Directions from "./components/Directions";
 import MusicButton from "./components/MusicButton";
-import CharacterPortrait from "./components/CharacterPortrait";
 
 export default function App() {
   const [myBuild, setMyBuild] = useState(newBuild("My Build", true));
@@ -26,7 +25,7 @@ export default function App() {
   const [efficient, setEfficient] = useState(true);
 
   useEffect(() => {
-    Classes.initSkills();
+    initSkills();
   }, []);
 
   useEffect(() => {
@@ -68,24 +67,24 @@ export default function App() {
   }, [startingSoulClarity]);
 
   const loadBuild = () => {
-    //load build from clipboard
-    let newBuildRaw = window.prompt("Paste Build Here: ", "");
+    // load build from clipboard
+    const newBuildRaw = window.prompt("Paste Build Here: ", "");
     if (newBuildRaw && newBuildRaw.length > 0) {
       if (!isJsonString(newBuildRaw)) {
-        //first check if SHORT save
-        let underCount = newBuildRaw.split("").filter((x) => x === "_").length;
+        // first check if SHORT save
+        const underCount = newBuildRaw.split("").filter(x => x === "_").length;
         if (underCount >= 2) {
-          //okay, SHORT save found!
-          let saveSplit = newBuildRaw.split("_");
-          let clsNumber = saveSplit[0];
-          let skillNumList = saveSplit[1];
-          let soulClarity = saveSplit[2];
+          // okay, SHORT save found!
+          const saveSplit = newBuildRaw.split("_");
+          const clsNumber = saveSplit[0];
+          const skillNumList = saveSplit[1];
+          const soulClarity = saveSplit[2];
 
-          let loadedBuild = {
+          const loadedBuild = {
             name: "Loaded S Build",
             facet: getFacetByNumber(clsNumber),
-            soulClarity,
-            skills: skillNumList.split("-").map((num) => {
+            soulClarity: soulClarity,
+            skills: skillNumList.split("-").map(num => {
               const skill = getSkillByNumber(num);
 
               return {
@@ -97,7 +96,8 @@ export default function App() {
                 level: skill.level,
                 cost: skill.cost
               };
-            })
+            }),
+            efficient
           };
 
           setMyBuild(loadedBuild);
@@ -108,16 +108,16 @@ export default function App() {
         return;
       }
 
-      let newBuild = JSON.parse(newBuildRaw);
+      const tempBuild = JSON.parse(newBuildRaw);
 
-      //new save
-      let loadedBuild = {
+      // new save
+      const loadedBuild = {
         name: "Loaded Build",
-        facet: newBuild.facet,
-        soulClarity: newBuild.soulClarity,
+        facet: tempBuild.facet,
+        soulClarity: tempBuild.soulClarity,
         efficient: efficient,
-        skills: newBuild.skills.map((x) => {
-          let skill = getSkillByName(x);
+        skills: tempBuild.skills.map(x => {
+          const skill = getSkillByName(x);
 
           return {
             name: skill.name,
@@ -132,7 +132,7 @@ export default function App() {
       };
 
       for (let i = loadedBuild.skills.length; i <= 12; i++) {
-        loadedBuild.skills.push(Skill());
+        loadedBuild.skills.push(newSkill());
       }
 
       setMyBuild(loadedBuild);
@@ -140,21 +140,86 @@ export default function App() {
   };
 
   const saveBuild = () => {
-    let skillNumberStr = myBuild.skills
-      .filter((x) => x.name !== "")
-      .map((x) => getSkillNumberByName(x.name))
+    const skillNumberStr = myBuild.skills
+      .filter(x => x.name !== "")
+      .map(x => getSkillNumberByName(x.name))
       .join("-");
-    let saveStr = `${getFacetNumber(myBuild.facet)}_${skillNumberStr}_${
+    const saveStr = `${getFacetNumber(myBuild.facet)}_${skillNumberStr}_${
       myBuild.soulClarity
     }`;
 
     window.prompt("CTRL+C to Copy Build", saveStr);
   };
 
+  const isDuplicateSkill = skill => {
+    for (const s of myBuild.skills) {
+      if (s.name === skill.name) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
+  const addSkill = skill => {
+    if (isDuplicateSkill(skill)) {
+      return;
+    }
+
+    const tempBuildSkills = myBuild.skills.slice(0);
+    tempBuildSkills.push({
+      name: skill.name,
+      description: skill.description,
+      facet: skill.facet,
+      innate: skill.innate,
+      color: skill.color,
+      level: skill.level,
+      cost: skill.cost
+    });
+
+    const newMyBuild = {
+      skills: tempBuildSkills,
+      name: myBuild.name,
+      soulClarity: startingSoulClarity,
+      facet: myBuild.facet,
+      efficient: efficient
+    };
+
+    setMyBuild(newMyBuild);
+  };
+
+  const removeSkill = skill => {
+    const tempBuildSkills = myBuild.skills
+      .slice(0)
+      .filter(x => x.name !== skill.name);
+
+    const newMyBuild = {
+      skills: tempBuildSkills,
+      name: myBuild.name,
+      soulClarity: startingSoulClarity,
+      facet: myBuild.facet,
+      efficient: efficient
+    };
+
+    setMyBuild(newMyBuild);
+  };
+
+  const changeClass = cls => {
+    const tempBuild = {
+      skills: myBuild.skills,
+      name: myBuild.name,
+      soulClarity: startingSoulClarity,
+      facet: cls,
+      efficient: efficient
+    };
+
+    setMyBuild(tempBuild);
+  };
+
   const renderBaseClasses = () => {
-    return Object.entries(Classes.getAllFacets()).map((clsNameSkills, i) => {
-      let clsName = clsNameSkills[0];
-      let skills = clsNameSkills[1];
+    return Object.entries(getAllFacets()).map((clsNameSkills, i) => {
+      const clsName = clsNameSkills[0];
+      const skills = clsNameSkills[1];
 
       return (
         <FacetTable
@@ -167,75 +232,12 @@ export default function App() {
     });
   };
 
-  const isDuplicateSkill = (skill) => {
-    for (const s of myBuild.skills) {
-      if (s.name === skill.name) {
-        return true;
-      }
-    }
-
-    return false;
-  };
-
-  const changeClass = (cls) => {
-    let tempBuild = {
-      skills: myBuild.skills,
-      name: myBuild.name,
-      soulClarity: startingSoulClarity,
-      facet: cls,
-      efficient: efficient
-    };
-
-    setMyBuild(tempBuild);
-  };
-
-  const addSkill = (skill) => {
-    if (isDuplicateSkill(skill)) return;
-
-    let tempBuildSkills = myBuild.skills.slice(0);
-    tempBuildSkills.push({
-      name: skill.name,
-      description: skill.description,
-      facet: skill.facet,
-      innate: skill.innate,
-      color: skill.color,
-      level: skill.level,
-      cost: skill.cost
-    });
-
-    let newMyBuild = {
-      skills: tempBuildSkills,
-      name: myBuild.name,
-      soulClarity: startingSoulClarity,
-      facet: myBuild.facet,
-      efficient: efficient
-    };
-
-    setMyBuild(newMyBuild);
-  };
-
-  const removeSkill = (skill) => {
-    let tempBuildSkills = myBuild.skills
-      .slice(0)
-      .filter((x) => x.name !== skill.name);
-
-    let newMyBuild = {
-      skills: tempBuildSkills,
-      name: myBuild.name,
-      soulClarity: startingSoulClarity,
-      facet: myBuild.facet,
-      efficient: efficient
-    };
-
-    setMyBuild(newMyBuild);
-  };
-
   return (
     <div className="App">
       <div style={{ width: "60vw" }}>{renderBaseClasses()}</div>
       <div className="CustomBuild">
         <CustomBuild
-          customClass={myBuild.facet}
+          facetName={myBuild.facet}
           editBuild={removeSkill}
           changeClass={changeClass}
           skills={myBuild.skills}
@@ -243,16 +245,16 @@ export default function App() {
         />
       </div>
       <Directions steps={finalSteps} hide={!seeDirections} />
-      {/*<CharacterPortrait className={myBuild.facet} />*/}
-      <div className={"ButtonsDiv"}>
+      {/* <CharacterPortrait className={myBuild.facet} />*/}
+      <div className="ButtonsDiv">
         {seeDirections && <button
-          className={"ModeButton"}
+          className="ModeButton"
           onClick={() => setEfficient(!efficient)}
         >
           {efficient ? "Mode: Efficient" : "Mode: Quickest"}
         </button>}
         <button
-          className={"ToggleButton"}
+          className="ToggleButton"
           onClick={() => setSeeDirections(!seeDirections)}
           style={{
             backgroundColor: "#dcfcd4",
@@ -264,7 +266,7 @@ export default function App() {
           Toggle
         </button>
         <a
-          className={"ToggleButton LinkButton"}
+          className="ToggleButton LinkButton"
           style={{ margin: "1em", display: "none" }}
           type="button"
           href={`data:text/json;charset=utf-8,${encodeURIComponent(
@@ -275,13 +277,13 @@ export default function App() {
           Save Build
         </a>
         <button
-          className={"ToggleButton"}
+          className="ToggleButton"
           style={{ margin: "1em" }}
           onClick={() => saveBuild()}
         >
           Save Build
         </button>
-        <button className={"ToggleButton"} onClick={() => loadBuild()}>
+        <button className="ToggleButton" onClick={() => loadBuild()}>
           Load Build
         </button>
         <input
@@ -293,15 +295,15 @@ export default function App() {
           value={startingSoulClarity}
           min={1}
           max={999}
-          onChange={(ev) =>
+          onChange={ev =>
             setStartingSoulClarity(parseInt(ev.currentTarget.value, 10))
           }
         />
         <datalist id="souls">
           <option label="Small Soul" value="1"></option>
-          <option label="Shining Soul" value="4"></option>
-          <option label="Shimmering Soul" value="8"></option>
-          <option label="Divine Soul" value="12"></option>
+          <option label="Small Soul / CI" value="2"></option>
+          <option label="Small Soul / CII" value="4"></option>
+          <option label="Small Soul / CIII" value="8"></option>
         </datalist>
         <MusicButton />
         <small><a href="https://github.com/cecilbowen/galleriaclassbuilder">Source Code</a></small>
