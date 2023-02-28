@@ -76,6 +76,56 @@ body {
   z-index: -1;
 }
 
+.FilterTags {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 1em;
+}
+
+.FilterTag {
+  color: white;
+  background-color: #40616a;
+  border-radius: 2px;
+  margin-right: 10px;
+  width: fit-content;
+  height: fit-content;
+  cursor: pointer;
+}
+
+.FilterDiv {
+  position: fixed;
+  z-index: 2;
+  left: 20px;
+  top: 0px;
+  width: 58vw;
+  background-color: black;
+  display: flex;
+  height: 100px;
+  cursor: initial;
+
+  padding: 0px;
+  font-size: 12px;
+  overflow: hidden;
+
+  border-left: 4px;
+  border-top: 2px;
+  border-bottom: 2px;
+  border-right: 4px;
+  border-style: outset;
+  border-radius: 6px;
+  border-color: #e0c3a0;
+  font-family: system-ui;
+  font-weight: bold;
+  color: #f6fcfc;
+  background-image: linear-gradient(#0a0e0e 2%, #212c2f 80%, #212c2f 10%);
+}
+
+.FilterBar {
+  width: 10vw;
+  height: fit-content;
+  margin: 10px;
+}
+
 .ToggleButton {
   width: 6em;
   height: 2em;
@@ -170,7 +220,7 @@ body {
   flex-wrap: wrap;
 }
 
-.SkillPointTable > div {
+.SkillPointTable>div {
   flex-basis: 40%;
   flex-grow: 1;
   margin: 1px 2px 2px 1px;
@@ -183,7 +233,7 @@ body {
   display: flex;
 }
 
-.SkillPointTableItem > div {
+.SkillPointTableItem>div {
   margin-left: 10px;
 }
 
@@ -197,13 +247,16 @@ body {
   right: 5px;
   top: 2px;
 }
+
 .DiscountTag-name {
   text-transform: uppercase;
   font-size: 10px;
 }
+
 .DiscountTag-number {
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
+
 .CostTag {
   position: absolute;
   right: 7px;
@@ -242,6 +295,7 @@ body {
   left: 61vw;
   overflow-y: auto;
   height: 80vh;
+  width: 36vw;
 }
 
 .CustomBuild-cell {
@@ -283,7 +337,7 @@ body {
   table-layout: fixed;
   vertical-align: top;
   display: table;
-  width: 30vw;
+  width: 100%;
   padding: 0em 1em 1em 1em;
 }
 
@@ -305,8 +359,7 @@ body {
   outline: 1px dashed yellow;
 }
 
-.FacetTable-body {
-}
+.FacetTable-body {}
 
 .FacetTable-cell {
   border: 1px solid #ddd;
@@ -334,12 +387,12 @@ body {
   /*background-color: #3a494d;*/
   width: 150px;
 }
+
 .FacetTable-row td:nth-child(2) {
   width: 20px;
 }
-.FacetTable-row td:nth-child(3) {
 
-}
+.FacetTable-row td:nth-child(3) {}
 
 .FacetTable-row:hover {
   background-color: rgb(75, 94, 99);
@@ -358,11 +411,17 @@ body {
 }
 
 .noselect {
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */
-  -moz-user-select: none; /* Old versions of Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Old versions of Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 }

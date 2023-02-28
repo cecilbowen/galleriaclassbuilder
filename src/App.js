@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./styles.css";
 import { initSkills, getAllFacets } from "./facets";
+import SKILLS from "./data/skills.json";
 import FacetTable from "./components/FacetTable";
 import {
   newBuild,
@@ -11,7 +12,8 @@ import {
   getSkillNumberByName,
   getFacetNumber,
   getFacetByNumber,
-  getSkillByNumber
+  getSkillByNumber,
+  TAG_DESCRIPTIONS
 } from "./utils";
 import CustomBuild from "./components/CustomBuild";
 import Directions from "./components/Directions";
@@ -23,6 +25,9 @@ export default function App() {
   const [seeDirections, setSeeDirections] = useState(false);
   const [startingSoulClarity, setStartingSoulClarity] = useState(1);
   const [efficient, setEfficient] = useState(true);
+  const [filterString, setFilterString] = useState("");
+  const [filterTag1, setFilterTag1] = useState("");
+  const [filterTag2, setFilterTag2] = useState("");
 
   useEffect(() => {
     initSkills();
@@ -49,6 +54,10 @@ export default function App() {
   useEffect(() => {
     setFinalSteps(getFacetOrder(myBuild));
   }, [myBuild]);
+
+  useEffect(() => {
+    setFilterTag2("");
+  }, [filterTag1]);
 
   useEffect(() => {
     let clarity = startingSoulClarity;
@@ -227,14 +236,80 @@ export default function App() {
           key={i}
           header={clsName}
           skills={skills}
+          filterString={filterString}
+          filterTags={[filterTag1, filterTag2]}
         />
       );
     });
   };
 
+  const renderFilter = () => {
+    let tags = [];
+    let tagsB = [];
+    for (const skill of SKILLS) {
+      for (const tag of skill.tags) {
+        tags.push(tag[0]);
+
+        if (filterTag1 && tag[1] && tag.indexOf(filterTag1) !== -1) {
+          tagsB.push(tag[1]);
+        }
+      }
+    }
+    tags = Array.from(new Set(tags));
+    tags.sort((a, b) => a - b);
+    tagsB = Array.from(new Set(tagsB));
+    tagsB.sort((a, b) => a - b);
+
+    return (
+      <div className="FilterDiv">
+        <input
+          className="FilterBar"
+          type="text"
+          id="filter"
+          name="filter"
+          onChange={ev => setFilterString(ev.target.value)}
+          placeholder="Search skills"
+        />
+        <div className="FilterTags noselect">
+          {tags.map((x, i) =>
+            <div
+              style={{ color: x === filterTag1 ? "gold" : "" }}
+              key={`filter-tag1-${i}`}
+              className="FilterTag"
+              title={TAG_DESCRIPTIONS[x]}
+              onClick={() => {
+                if (filterTag1 === x) {
+                  setFilterTag1("");
+                } else {
+                  setFilterTag1(x);
+                }
+              }}>{x}</div>
+          )}
+          {tagsB.map((x, i) =>
+            <div
+              style={{ backgroundColor: "#556a40", color: x === filterTag2 ? "gold" : "" }}
+              key={`filter-tag2-${i}`}
+              className="FilterTag"
+              title={TAG_DESCRIPTIONS[x]}
+              onClick={() => {
+                if (filterTag2 === x) {
+                  setFilterTag2("");
+                } else {
+                  setFilterTag2(x);
+                }
+              }}>{x}</div>
+          )}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="App">
-      <div style={{ width: "60vw" }}>{renderBaseClasses()}</div>
+      {renderFilter()}
+      <div style={{ width: "60vw", marginTop: "6.5em" }}>
+        {renderBaseClasses()}
+      </div>
       <div className="CustomBuild">
         <CustomBuild
           facetName={myBuild.facet}
@@ -306,7 +381,7 @@ export default function App() {
           <option label="Small Soul / CIII" value="8"></option>
         </datalist>
         <MusicButton />
-        <small><a href="https://github.com/cecilbowen/galleriaclassbuilder">Source Code</a></small>
+        <small><a style={{ color: "aqua" }} href="https://github.com/cecilbowen/galleriaclassbuilder">Source Code</a></small>
       </div>
     </div>
   );

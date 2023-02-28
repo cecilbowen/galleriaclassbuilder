@@ -2,8 +2,28 @@ import React, { useState } from "react";
 import { getFacetColor } from "../utils";
 import PropTypes from 'prop-types';
 
-const FacetTable = ({ header, editBuild, skills }) => {
+const FacetTable = ({ header, editBuild, filterString, filterTags, skills }) => {
   const [color] = useState(getFacetColor(header));
+
+  const fString = filterString.toLowerCase();
+  const fTags = filterTags;
+  let theSkills = skills;
+
+  if (fTags[0]) {
+    theSkills = skills.slice(0).filter(sk => {
+      let skTags = sk.tags.filter(tag => tag.includes(fTags[0]));
+      skTags = skTags.filter(tag => !fTags[1] || tag.includes(fTags[1]));
+
+      return skTags.length > 0;
+    });
+  }
+
+  if (fString) {
+    theSkills = theSkills.slice(0).filter(x =>
+      x.name.toLowerCase().includes(fString) ||
+      x.description.toLowerCase().includes(fString)
+    );
+  }
 
   const renderTableRow = (skill, index) => {
     const tags = skill.tags.map(x => `${x.join(" ")}`);
@@ -32,6 +52,9 @@ const FacetTable = ({ header, editBuild, skills }) => {
 
   const renderTable = tableSkills => {
     const headerColor = `linear-gradient(${color} -40%, #212c2f 80%, #212c2f 10%)`;
+    if (tableSkills.length === 0) {
+      return null;
+    }
 
     return (
       <table className={"FacetTable"}>
@@ -53,12 +76,14 @@ const FacetTable = ({ header, editBuild, skills }) => {
     );
   };
 
-  return renderTable(skills);
+  return renderTable(theSkills);
 };
 
 FacetTable.propTypes = {
   header: PropTypes.string,
   editBuild: PropTypes.func,
+  filterString: PropTypes.string,
+  filterTags: PropTypes.array,
   skills: PropTypes.array
 };
 

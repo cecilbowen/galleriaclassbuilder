@@ -5,6 +5,30 @@ export const SKILL_LEARN_LEVELS = [
   0, 0, 4, 8, 12, 17, 22, 28, 34, 41, 48, 56, 63, 72, 81
 ];
 
+export const TAG_DESCRIPTIONS = {
+	"Pos.": "Position: Skill only active when in certain battle positions",
+	"Def.": "Defense: Skill involves defense in battle",
+	"Learn": "Skill is a donum useable in battle",
+	"Max": "Skill has a stat or turn limit",
+	"Always": "Skill always active",
+	"Equip": "Skill only active when meeting certain equipment criteria",
+	"Atk.": "Attack: Involves an outgoing attack",
+	"Alike Excl.": "Alike Exclude: Only 1 skill from this skill's category can be active at a time",
+	"No Stack": "Skill effect doesn't stack",
+	"In Battle": "Skill only active in battle",
+	"KO": "Skill activates on a KO",
+	"Stack": "Skill effect stacks",
+	"HP>=": "HP must be >= a certain value for skill to take affect",
+	"Luc>=": "Luc must be >= a certain value for skill to take affect",
+	"Turn": "Skill activates every turn",
+	"HP<=": "HP must be <= a certain value for skill to take affect",
+	"HP": "HP must be at a certain value for skill to take affect",
+	"End Battle": "Skill activates on battle end",
+	"Evade": "Skill activates when player evades an attack",
+	"Turn End": "Skill activates on turn end",
+	"LUC": "LUC must be at a certain value for skill to take affect",
+};
+
 const CLARITY_STOPS = [
   22, 31, 38, 44, 49, 54, 59, 63, 67, 70, 74, 77, 80, 83, 86, 89, 92, 94, 97, 99
 ];
@@ -318,7 +342,7 @@ export const getFacetOrder = build => {
     });
 
     soulClarity = soulClarity + getSoulClarityIncreaseFromLevel(transferLevel);
-    soulClarity = Math.min(99, soulClarity);
+    soulClarity = Math.min(999, soulClarity);
   }
 
   finalSteps.sort((a, b) => {
@@ -399,6 +423,20 @@ export const getSkillPointsAddedFromSoulClarity = soulClarity => {
   }
 
   return Math.floor(soulClarity / 10) - 9 + 98;
+};
+
+export const getSoulClarityToHitSkillPoints = (skillPointsTarget, numPetitions) => {
+  const withoutWitchPetitions = (skillPointsTarget - 40 - 99) * 10 + 109;
+  const with1WitchPetition = (skillPointsTarget - 50 - 99) * 10 + 109;
+  const with2WitchPetitions = (skillPointsTarget - 80 - 99) * 10 + 109;
+
+  if (numPetitions === 1) {
+    return with1WitchPetition;
+  } else if (numPetitions === 2) {
+    return with2WitchPetitions;
+  }
+
+  return withoutWitchPetitions;
 };
 
 export const getFacetColor = facetName => {

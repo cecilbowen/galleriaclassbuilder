@@ -60,10 +60,19 @@ export const initSkills = () => {
     skill.color = getFacetColor(skill.facet);
     skill.level = getSkillLevel(skill);
   }
+
+  const tags = [];
+  for (const skill of SKILLS) {
+    for (const tag of skill.tags) {
+      tags.push(tag[0]);
+    }
+  }
+  tags.sort((a, b) => a - b);
+  console.log('tags', Array.from(new Set(tags)));
 };
 
 export const getAllFacets = () => {
-  let allFacets = {};
+  const allFacets = {};
   let facetName;
   for (const skill of SKILLS) {
     if (!facetName || facetName !== skill.facet) {

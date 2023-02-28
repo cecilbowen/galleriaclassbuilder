@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from 'prop-types';
 import { getFacetColor, getSkillByName, DISCOUNT_COLORS, getSkillPointsAddedFromSoulClarity,
+  getSoulClarityToHitSkillPoints,
   getSkillDiscountedCost, isInExclusiveCategory, DISCOUNTS } from "../utils";
 
 const Directions = ({ hide, steps }) => {
@@ -44,6 +45,26 @@ const Directions = ({ hide, steps }) => {
       setSkillsChecked(tempChecked);
     }
   }, [steps]);
+
+  const toggleSkill = skill => {
+    const tempChecked = new Map(skillsChecked);
+    const checked = tempChecked.get(skill.name);
+
+    if (!checked) {
+      // disable alike exclusive skills in same category
+      for (const sk of skills) {
+        if (sk.name === skill.name) { continue; }
+        if (isInExclusiveCategory(skill, sk)) {
+          sk.checked = false;
+          tempChecked.set(sk.name, false);
+        }
+      }
+    }
+
+    skill.checked = !checked;
+    tempChecked.set(skill.name, !checked);
+    setSkillsChecked(tempChecked);
+  };
 
   const renderTableRow = (rowData, index) => {
     const className = rowData.facet;
@@ -119,26 +140,6 @@ const Directions = ({ hide, steps }) => {
     );
   };
 
-  const toggleSkill = skill => {
-    const tempChecked = new Map(skillsChecked);
-    const checked = tempChecked.get(skill.name);
-
-    if (!checked) {
-      // disable alike exclusive skills in same category
-      for (const sk of skills) {
-        if (sk.name === skill.name) { continue; }
-        if (isInExclusiveCategory(skill, sk)) {
-          sk.checked = false;
-          tempChecked.set(sk.name, false);
-        }
-      }
-    }
-
-    skill.checked = !checked;
-    tempChecked.set(skill.name, !checked);
-    setSkillsChecked(tempChecked);
-  };
-
   const renderSkillTableRow = (skill, index) => {
     const rawSkill = getSkillByName(skill.name);
     const color = skill.checked ? "#fff1a9" : "white";
@@ -178,6 +179,8 @@ const Directions = ({ hide, steps }) => {
       skillPoints = skillPoints + getSkillDiscountedCost(skill);
     }
 
+    const targetSoulClarity = getSoulClarityToHitSkillPoints(skillPoints, skillStars);
+
     return (
       <div className="SkillPointDisplay">
         <div className="SkillFrame SkillHeader noselect">
@@ -193,6 +196,9 @@ const Directions = ({ hide, steps }) => {
         </div>
         <div className="SkillPointTable">
           {skills.map((x, i) => renderSkillTableRow(x, i))}
+        </div>
+        <div style={{ color: 'white', display: 'none' }}>
+          {targetSoulClarity} soul clarity required to hit desired skill points.
         </div>
       </div>
     );
