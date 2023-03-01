@@ -71,14 +71,14 @@ export const getFacetNumber = facetName => {
 };
 
 export const getFacetAltByNumber = number => {
-	if (number > 12) {
-		number -= 24; //offset if number is already an alt facet
-	}
-	return Facets.names[number + 12];
+  if (number > 12) {
+    number -= 24; //offset if number is already an alt facet
+  }
+  return Facets.names[number + 12];
 };
 
 export const getFacetAltByName = facetName => {
-	return getFacetAltByNumber(getFacetNumber(facetName));
+  return getFacetAltByNumber(getFacetNumber(facetName));
 };
 
 export const getSkillNumberByName = name => {
@@ -237,7 +237,7 @@ export const getFacetOrder = build => {
       console.log(`${secondMostExpensiveFacet} is next expensive at ${secondMostCost}.`);
 
       if (mostExpensiveFacet === targetFacet.facet) {
-	const noClassDiscount = mostCost - Math.floor(mostCost * 0.75) + secondMostCost;
+        const noClassDiscount = mostCost - Math.floor(mostCost * 0.75) + secondMostCost;
         const classDiscount = mostCost - Math.floor(mostCost * 0.66) + (secondMostCost - Math.floor(secondMostCost * 0.75));
 
         if (classDiscount < noClassDiscount) {
@@ -425,7 +425,7 @@ export const getSkillDiscountedCost = skill => {
       break;
   }
 
-	return Math.round(skill.cost * (1 - discount));
+  return Math.round(skill.cost * (1 - discount));
 };
 
 export const getSkillPointsAddedFromSoulClarity = soulClarity => {
