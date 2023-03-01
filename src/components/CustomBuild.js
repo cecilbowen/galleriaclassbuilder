@@ -24,7 +24,7 @@ const CustomBuild = ({ changeClass, facetName, editBuild, hide, skills }) => {
     currentClassIndex++;
     if (altClassSet === true && currentClassIndex > names.length - 1) {
       currentClassIndex = names.length / 2;
-    } else if (currentClassIndex < names.length / 2) {
+    } else if (currentClassIndex > names.length / 2) {
       currentClassIndex = 0;
     }
 
