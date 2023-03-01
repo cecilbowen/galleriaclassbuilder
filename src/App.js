@@ -52,12 +52,12 @@ export default function App() {
   useEffect(() => {
     const clarity = startingSoulClarity;
 
-    if (clarity > 999) {
-      setStartingSoulClarity(999);
-    }
-
     if (isNaN(clarity)) {
       setStartingSoulClarity(1);
+    }
+
+    if (clarity > 999) {
+      setStartingSoulClarity(999);
     }
 
     const tempBuild = {
