@@ -314,7 +314,8 @@ export const getFacetOrder = build => {
         discount = "unique";
       }
 			
-			console.log("tagetFacet " + targetFacet);
+			console.log("PRINTING tagetFacet NOW);
+			console.log(targetFacet)
 			console.log("targetFacet.facet" + targetFacet.facet);
 
       skills.push({
