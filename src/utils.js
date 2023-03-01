@@ -237,8 +237,8 @@ export const getFacetOrder = build => {
       console.log(`${secondMostExpensiveFacet} is next expensive at ${secondMostCost}.`);
 
       if (mostExpensiveFacet === targetFacet.facet) {
-        const noClassDiscount = mostCost - Math.floor(mostCost * 0.75) + secondMostCost;
-        const classDiscount = mostCost - Math.floor(mostCost * 0.66) + (secondMostCost - Math.floor(secondMostCost * 0.75));
+				const noClassDiscount = Math.round(mostCost * (1 - 0.75)) + secondMostCost;
+        const classDiscount = Math.round(mostCost * (1 - 0.66)) + (Math.round(secondMostCost - (1 - 0.75)));
 
         if (classDiscount < noClassDiscount) {
           console.log("more efficient to get both CLASS and INITIAL discounts");
@@ -425,7 +425,7 @@ export const getSkillDiscountedCost = skill => {
       break;
   }
 
-  return skill.cost - Math.floor(discount * skill.cost);
+	return Math.round(skill.cost * (1 - discount));
 };
 
 export const getSkillPointsAddedFromSoulClarity = soulClarity => {
