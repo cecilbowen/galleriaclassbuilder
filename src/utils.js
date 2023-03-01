@@ -313,7 +313,8 @@ export const getFacetOrder = build => {
       if ((skill.innate || skill.learn) && skill.facet === targetFacet.facet) {
         discount = "unique";
       }
-			
+	    		console.log("printing lastFacet NOW")
+			console.log(lastFacet);
 			console.log("PRINTING targetFacet NOW");
 			console.log(targetFacet);
 			console.log("targetFacet.facet: " + targetFacet.facet);
