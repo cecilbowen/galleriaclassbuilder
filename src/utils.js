@@ -72,7 +72,7 @@ export const getFacetNumber = facetName => {
 
 export const getFacetAltByNumber = number => {
   if (number > 12) {
-    number -= 24; //offset if number is already an alt facet
+    number -= 24; // offset if number is already an alt facet
   }
   return Facets.names[number + 12];
 };
@@ -101,6 +101,26 @@ export const getSkillByName = name => {
 export const getSkillByNumber = number => {
   number = parseInt(number, 10);
   return SKILLS.filter(x => x.id === number)[0];
+};
+
+export const getSkillDiscountedCost = (cost, discountType) => {
+  let discount = 0;
+  switch (discountType) {
+    case "unique":
+      discount = 1;
+      break;
+    case "initial":
+      discount = 0.75;
+      break;
+    case "class":
+      discount = 0.66;
+      break;
+    default:
+      discount = 0;
+      break;
+  }
+
+  return Math.ceil(cost * (1 - discount));
 };
 
 const getLevelForSkillTransfer = skills => {
@@ -201,61 +221,65 @@ export const getFacetOrder = build => {
     }).filter(x => x.name !== moneySkill.name)];
   }
 
+  const altTargetFacet = getFacetAltByName(build.facet);
+
   // handle efficient route if active
   let reOrdered = ascLevel.slice(0);
   let appendFacet;
   console.log("build", build);
   if (build.efficient && reOrdered.length > 1) {
-    let mostExpensiveFacet = ascLevel[0];
-    let secondMostExpensiveFacet;
-    let mostCost = 0;
-    let secondMostCost = 0;
-    if (mostExpensiveFacet) {
-      mostExpensiveFacet = mostExpensiveFacet.facet;
+    let bestFacetForInitialDiscount = ascLevel[0];
 
+    if (bestFacetForInitialDiscount) {
       for (const facet of ascLevel) {
         const facetName = facet.facet;
-        let facetCostSum = 0;
+        let facetCostSumIfInitial = 0;
+
+        // INITIAL sum
         for (const sk of facet.skills) {
-          if (facetName === targetFacet.facet) {
-            if (sk.innate || sk.learn) {
-              continue;
+          let skillDiscount = "initial";
+          if (facetName === targetFacet.facet || facetName === altTargetFacet) {
+            if (sk.innate || sk.learn && facetName === targetFacet.facet) {
+              skillDiscount = "unique";
             }
           }
-          facetCostSum = facetCostSum + sk.cost;
+          facetCostSumIfInitial += getSkillDiscountedCost(sk.cost, skillDiscount);
         }
 
-        if (facetCostSum > mostCost) {
-          secondMostCost = mostCost;
-          mostCost = facetCostSum;
-          secondMostExpensiveFacet = mostExpensiveFacet;
-          mostExpensiveFacet = facetName;
+        // now cost of the rest (non-initial)
+        for (const subFacet of ascLevel.filter(x => x.facet !== facetName)) {
+          const subFacetName = subFacet.facet;
+          for (const sk of subFacet.skills) {
+            let skillDiscount = "none";
+            if (subFacetName === targetFacet.facet || subFacetName === altTargetFacet) {
+              skillDiscount = "class";
+              if (sk.innate || sk.learn && subFacetName === targetFacet.facet) {
+                skillDiscount = "unique";
+              }
+            }
+
+            facetCostSumIfInitial += getSkillDiscountedCost(sk.cost, skillDiscount);
+          }
         }
+
+        console.log(`${facet.facet} total discounted skills cost if initial: ${facetCostSumIfInitial}.`);
+        facet.facetCostSumIfInitial = facetCostSumIfInitial;
       }
 
-      console.log(`${mostExpensiveFacet} is the most expensive at ${mostCost}.`);
-      console.log(`${secondMostExpensiveFacet} is next expensive at ${secondMostCost}.`);
-
-      if (mostExpensiveFacet === targetFacet.facet) {
-        const noClassDiscount = mostCost - Math.floor(mostCost * 0.75) + secondMostCost;
-        const classDiscount = mostCost - Math.floor(mostCost * 0.66) + (secondMostCost - Math.floor(secondMostCost * 0.75));
-
-        if (classDiscount < noClassDiscount) {
-          console.log("more efficient to get both CLASS and INITIAL discounts");
-          mostExpensiveFacet = secondMostExpensiveFacet;
-        }
-      }
+      bestFacetForInitialDiscount = ascLevel.sort((a, b) => {
+        return a.facetCostSumIfInitial - b.facetCostSumIfInitial;
+      })[0].facet;
 
       // put most expensive facet at beginning for the INITIAL discount
-      const moneyFacet = ascLevel.filter(x => x.facet === mostExpensiveFacet)[0];
+      const moneyFacet = ascLevel.filter(x => x.facet === bestFacetForInitialDiscount)[0];
       const uniques = moneyFacet.skills.filter(x => x.innate || x.learn);
       moneyFacet.skills = moneyFacet.skills
         .filter(x => (!x.innate || x.facet !== targetFacet.facet) && !x.learn)
         .sort((a, b) => a.level - b.level);
       moneyFacet.order = 350;
-      reOrdered = [moneyFacet, ...ascLevel.filter(x => x.facet !== mostExpensiveFacet)];
+      reOrdered = [moneyFacet, ...ascLevel.filter(x => x.facet !== bestFacetForInitialDiscount)];
 
-      if (mostExpensiveFacet === targetFacet.facet) {
+      if (bestFacetForInitialDiscount === targetFacet.facet) {
         // so now we need a split of the target facet
         // one at the beginning to get the INITIAL discount, and one at the end
         // the one at the end will just have any unique skills to be learned, if any, since they're free
@@ -321,7 +345,8 @@ export const getFacetOrder = build => {
       if (skill.facet === initialFacet) {
         discount = "initial";
       }
-      if ((skill.innate || skill.learn) && (skill.facet === targetFacet.facet || skill.facet === getFacetAltByName(targetFacet.facet))) {
+      if ((skill.innate || skill.learn) &&
+        (skill.facet === targetFacet.facet || skill.facet === getFacetAltByName(targetFacet.facet))) {
         discount = "unique";
       }
 
@@ -406,26 +431,6 @@ export const isInExclusiveCategory = (skillAA, skillBB) => {
   const skillA = getSkillByName(skillAA.name);
   const skillB = getSkillByName(skillBB.name);
   return skillA.category && skillA.category === skillB.category;
-};
-
-export const getSkillDiscountedCost = skill => {
-  let discount = 0;
-  switch (skill.discount) {
-    case "unique":
-      discount = 1;
-      break;
-    case "initial":
-      discount = 0.75;
-      break;
-    case "class":
-      discount = 0.66;
-      break;
-    default:
-      discount = 0;
-      break;
-  }
-
-  return Math.round(skill.cost * (1 - discount));
 };
 
 export const getSkillPointsAddedFromSoulClarity = soulClarity => {

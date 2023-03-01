@@ -234,7 +234,7 @@ module.exports = {
         'no-unneeded-ternary': WARN,
         'object-curly-spacing': [WARN, 'always'],
         'one-var': OFF,
-        'operator-assignment': [WARN, 'never'],
+        'operator-assignment': [OFF, 'never'],
         'operator-linebreak': [WARN, 'after'],
         'padded-blocks': [WARN, 'never'],
         'quote-props': [WARN, 'consistent-as-needed'],

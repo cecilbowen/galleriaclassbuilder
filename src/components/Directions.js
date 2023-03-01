@@ -155,7 +155,7 @@ const Directions = ({ hide, steps }) => {
         <div style={{ color }} className="SkillText">{skill.name}</div>
         <div className="DiscountTag">
           <div style={{ position: "relative", width: "2px" }}>
-            <div className="CostTag">{getSkillDiscountedCost(skill)}</div>
+            <div className="CostTag">{getSkillDiscountedCost(skill.cost, skill.discount)}</div>
           </div>
           {skill.discount &&
             <div
@@ -176,7 +176,7 @@ const Directions = ({ hide, steps }) => {
     let skillPoints = 0;
     for (const skill of skills) {
       if (!skill.checked) { continue; }
-      skillPoints = skillPoints + getSkillDiscountedCost(skill);
+      skillPoints = skillPoints + getSkillDiscountedCost(skill.cost, skill.discount);
     }
 
     const targetSoulClarity = getSoulClarityToHitSkillPoints(skillPoints, skillStars);
