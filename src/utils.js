@@ -313,6 +313,9 @@ export const getFacetOrder = build => {
       if ((skill.innate || skill.learn) && skill.facet === targetFacet.facet) {
         discount = "unique";
       }
+			
+			consol.log(targetFacet);
+			console.log(targetFacet.facet);
 
       skills.push({
         name: skill.name,
