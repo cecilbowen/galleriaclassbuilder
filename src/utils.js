@@ -238,7 +238,7 @@ export const getFacetOrder = build => {
 
       if (mostExpensiveFacet === targetFacet.facet) {
 				const noClassDiscount = Math.round(mostCost * (1 - 0.75)) + secondMostCost;
-        const classDiscount = Math.round(mostCost * (1 - 0.66)) + (Math.round(secondMostCost - (1 - 0.75)));
+        const classDiscount = Math.round(mostCost * (1 - 0.66)) + Math.round(secondMostCost - (1 - 0.75));
 
         if (classDiscount < noClassDiscount) {
           console.log("more efficient to get both CLASS and INITIAL discounts");
