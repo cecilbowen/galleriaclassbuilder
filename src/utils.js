@@ -327,7 +327,7 @@ export const getFacetOrder = build => {
   ];
 
   let totalLevel = 0;
-  let soulClarity = build.soulClarity;
+  let soulClarity = isNaN(build.soulClarity) ? 1 : build.soulClarity;
   const initialFacet = steps[0].facet;
   const lastFacet = steps[steps.length - 1].facet;
   for (const step of steps) {
@@ -473,7 +473,7 @@ export const newBuild = (name, efficient) => {
   return {
     name,
     skills: [],
-    soulClarity: 0,
+    soulClarity: 1,
     facet: Facets.names[0],
     efficient
   };

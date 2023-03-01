@@ -42,16 +42,6 @@ export default function App() {
   }, [efficient]);
 
   useEffect(() => {
-    if (startingSoulClarity > 999) {
-      setStartingSoulClarity(999);
-    }
-
-    if (isNaN(startingSoulClarity)) {
-      setStartingSoulClarity(1);
-    }
-  }, [startingSoulClarity]);
-
-  useEffect(() => {
     setFinalSteps(getFacetOrder(myBuild));
   }, [myBuild]);
 
@@ -60,9 +50,14 @@ export default function App() {
   }, [filterTag1]);
 
   useEffect(() => {
-    let clarity = startingSoulClarity;
+    const clarity = startingSoulClarity;
+
+    if (clarity > 999) {
+      setStartingSoulClarity(999);
+    }
+
     if (isNaN(clarity)) {
-      clarity = 1;
+      setStartingSoulClarity(1);
     }
 
     const tempBuild = {
@@ -87,7 +82,8 @@ export default function App() {
           const saveSplit = newBuildRaw.split("_");
           const clsNumber = saveSplit[0];
           const skillNumList = saveSplit[1];
-          const soulClarity = saveSplit[2];
+          let soulClarity = parseInt(saveSplit[2], 10);
+          soulClarity = isNaN(soulClarity) ? 1 : soulClarity;
 
           const loadedBuild = {
             name: "Loaded S Build",
@@ -110,6 +106,7 @@ export default function App() {
           };
 
           setMyBuild(loadedBuild);
+          setStartingSoulClarity(soulClarity);
           return;
         }
 
@@ -153,8 +150,9 @@ export default function App() {
       .filter(x => x.name !== "")
       .map(x => getSkillNumberByName(x.name))
       .join("-");
+    const clarity = isNaN(myBuild.soulClarity) ? 1 : myBuild.soulClarity;
     const saveStr = `${getFacetNumber(myBuild.facet)}_${skillNumberStr}_${
-      myBuild.soulClarity
+      clarity
     }`;
 
     window.prompt("CTRL+C to Copy Build", saveStr);
