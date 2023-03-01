@@ -70,6 +70,17 @@ export const getFacetNumber = facetName => {
   return Facets.names.indexOf(facetName);
 };
 
+export const getFacetAltByNumber = number => {
+  if (number > 12) {
+    number -= 24; //offset if number is already an alt facet
+  }
+  return Facets.names[number + 12];
+};
+
+export const getFacetAltByName = facetName => {
+  return getFacetAltByNumber(getFacetNumber(facetName));
+};
+
 export const getSkillNumberByName = name => {
   for (const skill of SKILLS) {
     const number = skill.id;
@@ -304,13 +315,13 @@ export const getFacetOrder = build => {
       }
 
       let discount;
-      if (skill.facet === lastFacet) {
+      if (skill.facet === lastFacet || skill.facet === getFacetAltByName(lastFacet)) {
         discount = "class";
       }
       if (skill.facet === initialFacet) {
         discount = "initial";
       }
-      if ((skill.innate || skill.learn) && skill.facet === targetFacet.facet) {
+      if ((skill.innate || skill.learn) && (skill.facet === targetFacet.facet || skill.facet === getFacetAltByName(targetFacet.facet))) {
         discount = "unique";
       }
 
@@ -414,7 +425,7 @@ export const getSkillDiscountedCost = skill => {
       break;
   }
 
-  return skill.cost - Math.floor(discount * skill.cost);
+  return Math.round(skill.cost * (1 - discount));
 };
 
 export const getSkillPointsAddedFromSoulClarity = soulClarity => {
