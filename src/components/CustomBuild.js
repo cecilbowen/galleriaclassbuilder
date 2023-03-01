@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { colors, names } from "../facets";
-import { getFacetColor } from "../utils";
+import { getFacetColor, getFacetAltByName } from "../utils";
 import PropTypes from 'prop-types';
 
 const CustomBuild = ({ changeClass, facetName, editBuild, hide, skills }) => {
@@ -20,14 +20,21 @@ const CustomBuild = ({ changeClass, facetName, editBuild, hide, skills }) => {
 
   const cycleClass = () => {
     let currentClassIndex = names.indexOf(customClass);
+    let altClassSet = currentClassIndex > names.length / 2 - 1;
     currentClassIndex++;
-    if (currentClassIndex > names.length - 1) {
+    if (altClassSet === true && currentClassIndex > names.length - 1) {
+      currentClassIndex = names.length / 2;
+    } else if (currentClassIndex === names.length / 2) {
       currentClassIndex = 0;
     }
 
     setCustomClass(names[currentClassIndex]);
   };
-
+  
+  const toggleAltFacet = () => {
+    setCustomClass(getFacetAltByName(customClass));
+  };
+  
   const renderCell = (data, style) => {
     return (
       <td style={style || {}} className={"SkillFrame CustomBuild-cell noselect"}>
@@ -57,7 +64,7 @@ const CustomBuild = ({ changeClass, facetName, editBuild, hide, skills }) => {
 
     const cycleTooltip =
       <div style={{ fontSize: "8px", textDecoration: "underline" }}>
-        (Click to Cycle Class)
+        (Click to Cycle Facet | Right click to Toggle Type)
       </div>
     ;
 
@@ -68,6 +75,10 @@ const CustomBuild = ({ changeClass, facetName, editBuild, hide, skills }) => {
             className={"CustomBuild-header"}
             style={{ backgroundImage: headerColor }}
             onClick={() => cycleClass()}
+            onContextMenu={e => {
+              e.preventDefault();
+              toggleAltFacet();
+            }}
           >
             <th
               className={"SkillFrame-header CustomBuild-cell noselect"}

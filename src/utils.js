@@ -71,7 +71,7 @@ export const getFacetNumber = facetName => {
 };
 
 export const getFacetAltByNumber = number => {
-  if (number > 12) {
+  if (number >= 12) {
     number -= 24; // offset if number is already an alt facet
   }
   return Facets.names[number + 12];
