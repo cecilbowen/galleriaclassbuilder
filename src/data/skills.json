@@ -84,6 +84,7 @@
   {
     "name": "Fieldlamp Tactics",
     "description": "Critical value +50% when attacked at weapon range.  +20% counter chance, 50% dmg.  1 hit.",
+    "correctedDescription": "Critical value +50 when attacked at weapon range.  +20% counter chance, 50% dmg.  1 hit.",
     "cost": 44,
     "orbColor": "red",
     "category": false,
@@ -103,6 +104,7 @@
   {
     "name": "Magia Seal",
     "description": "When defending, Flame, Mud and Fog Resistance +15.  Affiliated Coven is affected for the turn.",
+    "correctedDescription": "When defending, Flame, Mud and Fog Resistance +15.  Affiliated Coven is affected when using Fortify Coven (1 turn only).",
     "cost": 10,
     "orbColor": "red",
     "category": "Magia Seal",
@@ -237,6 +239,7 @@
   {
     "name": "Magia Seal II",
     "description": "When defending, Flame, Mud, Fog Resistance +30.  Affiliated Coven is affected for the turn.",
+    "correctedDescription": "When defending, Flame, Mud and Fog Resistance +30.  Affiliated Coven is affected when using Fortify Coven (1 turn only).",
     "cost": 20,
     "orbColor": "red",
     "category": "Magia Seal",
@@ -751,6 +754,7 @@
   {
     "name": "Therapeutic Dance",
     "description": "Heal 15% HP per turn and 3% HP to adjacent soldiers if attacker.  If supporter, 1% HP to Coven attackers.",
+    "correctedDescription": "If attacker, heal 3% HP to self per turn, and adjacent attackers heal 15% HP at end of battle.  If supporter, heals Coven attackers HP by 1% per turn.",
     "cost": 50,
     "orbColor": "red",
     "category": false,
@@ -1054,6 +1058,7 @@
   {
     "name": "Maverick",
     "description": "Number of causal factors affects amount of critical hits.",
+    "correctedDescription": "Lucky number affects chance to deal and receive critical hits.",
     "cost": 10,
     "orbColor": "red",
     "category": false,
@@ -1531,6 +1536,7 @@
   {
     "name": "Shadow's Flower",
     "description": "If your character is the last to act, increases chance of last character to be targeted.",
+    "correctedDescription": "If the previous action was carried out by an ally character, that ally character is more likely to be targeted.",
     "cost": 50,
     "orbColor": "red",
     "category": false,
@@ -1815,6 +1821,7 @@
   {
     "name": "Blood-Wind Dance",
     "description": "Attack and AVD +100%, Defense and HIT -50%.  In addition, adds +35% chance of activating Star Storm Dance.",
+    "correctedDescription": "Attack and AVD +100%, Defense and HIT -50%.  In addition, adds +35% chance of activating Scythe Dancer.",
     "cost": 50,
     "orbColor": "red",
     "category": false,
@@ -2161,6 +2168,7 @@
   {
     "name": "Contra-Bash",
     "description": "75% to stun attacker when guarding in weapon range.  Stun value +2600, 50% to counter damage.",
+    "correctedDescription": "75% chance to counter physical attacks after guarding while defending.  Counter stun value +2600, 50% counter damage, 1x.",
     "cost": 38,
     "orbColor": "red",
     "category": false,
@@ -2999,6 +3007,7 @@
   {
     "name": "Wild Bearing",
     "description": "Increases AVD by 6.  Excludes Relics.  Does not include lost parts status.",
+    "correctedDescription": "Increases AVD by 6x.  Excludes Relics.  Does not include lost parts status.",
     "cost": 45,
     "orbColor": "red",
     "category": "Wild Bearing",
@@ -4297,6 +4306,7 @@
   {
     "name": "Black Biotope",
     "description": "+ATK, DEF, HIT for each incapacitated member.  Increases AVD, but halves each initial value.",
+    "correctedDescription": "+ATK, DEF, HIT and AVD for each incapacitated member but halves each initial value.",
     "cost": 50,
     "orbColor": "red",
     "category": false,
@@ -4702,6 +4712,7 @@
   {
     "name": "Martial King",
     "description": "Increases Rapport gain and loss by 1.25x.  Using [Equip Master S+ Lightning Technique] increases up to 1.75x.",
+    "correctedDescription": "Increases Rapport gain and loss by 1.25x.  Using [Equip Master S+ Scroll] increases up to 1.75x.",
     "cost": 9,
     "orbColor": "red",
     "category": false,
@@ -5633,6 +5644,7 @@
   {
     "name": "High Zone",
     "description": "HIT +10%.  Critical value +5.  Maximum critical and HIT +300%.  Resets after attack.",
+    "correctedDescription": "HIT +10%.  Critical value +5.  Maximum critical and HIT +300%.  Resets after being attacked.",
     "cost": 27,
     "orbColor": "red",
     "category": false,
@@ -5758,6 +5770,7 @@
   {
     "name": "Sniper",
     "description": "25% chance to counter along with Coven attacks +50 ATK.",
+    "correctedDescription": "Pursuit rate +25%, pursuit damage +50%, 1x.",
     "cost": 27,
     "orbColor": "red",
     "category": false,
@@ -6109,6 +6122,7 @@
   {
     "name": "Lonely Fighter",
     "description": "Increases AVD by +25% while the same facet is not an attacker in the same brigade (ignoring gender differences).",
+    "correctedDescription": "Increases AVD by +50% while the same facet is not an attacker in the same brigade (ignoring gender differences).",
     "cost": 15,
     "orbColor": "red",
     "category": false,

@@ -120,7 +120,7 @@ export const getSkillDiscountedCost = (cost, discountType) => {
       break;
   }
 
-  return Math.ceil(cost * (1 - discount));
+  return Math.round(cost * (1 - discount));
 };
 
 const getLevelForSkillTransfer = skills => {
@@ -417,14 +417,9 @@ export const getSkillLevel = skill => {
   return SKILL_LEARN_LEVELS[index];
 };
 
-export const isJsonString = str => {
-  try {
-    JSON.parse(str);
-  } catch (e) {
-    return false;
-  }
-
-  return true;
+export const isValidBuildString = str => {
+  // multi || single skill tests, eg. 0_2-3-11_2 || 0_2_2
+  return (/^[0-9]+_[0-9]+(-[0-9]+)+_[0-9]+$/).test(str) || (/^[0-9]+_[0-9]+_[0-9]+$/).test(str);
 };
 
 export const isInExclusiveCategory = (skillAA, skillBB) => {
@@ -469,12 +464,12 @@ export const newSkill = (name, description, innate, color) => {
   };
 };
 
-export const newBuild = (name, efficient) => {
+export const newBuild = (name, efficient, facet) => {
   return {
     name,
     skills: [],
     soulClarity: 1,
-    facet: Facets.names[0],
+    facet: facet || Facets.names[0],
     efficient
   };
 };

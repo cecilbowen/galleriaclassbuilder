@@ -59,6 +59,7 @@ export const initSkills = () => {
   for (const skill of SKILLS) {
     skill.color = getFacetColor(skill.facet);
     skill.level = getSkillLevel(skill);
+    skill.description = skill.correctedDescription || skill.description;
   }
 
   const tags = [];

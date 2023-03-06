@@ -20,7 +20,7 @@ const CustomBuild = ({ changeClass, facetName, editBuild, hide, skills }) => {
 
   const cycleClass = () => {
     let currentClassIndex = names.indexOf(customClass);
-    let altClassSet = currentClassIndex > names.length / 2 - 1;
+    const altClassSet = currentClassIndex > names.length / 2 - 1;
     currentClassIndex++;
     if (altClassSet === true && currentClassIndex > names.length - 1) {
       currentClassIndex = names.length / 2;
@@ -30,11 +30,11 @@ const CustomBuild = ({ changeClass, facetName, editBuild, hide, skills }) => {
 
     setCustomClass(names[currentClassIndex]);
   };
-  
+
   const toggleAltFacet = () => {
     setCustomClass(getFacetAltByName(customClass));
   };
-  
+
   const renderCell = (data, style) => {
     return (
       <td style={style || {}} className={"SkillFrame CustomBuild-cell noselect"}>

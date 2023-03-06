@@ -3,12 +3,11 @@ import "./styles.css";
 import { initSkills, getAllFacets } from "./facets";
 import SKILLS from "./data/skills.json";
 import FacetTable from "./components/FacetTable";
+import CharacterPortrait from "./components/CharacterPortrait";
 import {
   newBuild,
-  getSkillByName,
   getFacetOrder,
-  isJsonString,
-  newSkill,
+  isValidBuildString,
   getSkillNumberByName,
   getFacetNumber,
   getFacetByNumber,
@@ -20,7 +19,8 @@ import Directions from "./components/Directions";
 import MusicButton from "./components/MusicButton";
 
 export default function App() {
-  const [myBuild, setMyBuild] = useState(newBuild("My Build", true));
+  const DYNAMIC_URL = true;
+  const [myBuild, setMyBuild] = useState(newBuild("Blank Build", true));
   const [finalSteps, setFinalSteps] = useState(undefined);
   const [seeDirections, setSeeDirections] = useState(false);
   const [startingSoulClarity, setStartingSoulClarity] = useState(1);
@@ -28,6 +28,66 @@ export default function App() {
   const [filterString, setFilterString] = useState("");
   const [filterTag1, setFilterTag1] = useState("");
   const [filterTag2, setFilterTag2] = useState("");
+
+  const loadBuild = (buildStr, assign) => {
+    // load build from clipboard
+    const newBuildRaw = buildStr || window.prompt("Paste Build Here: ", "");
+    if (isValidBuildString(newBuildRaw)) {
+      const saveSplit = newBuildRaw.split("_");
+      const clsNumber = saveSplit[0];
+      const skillNumList = saveSplit[1];
+      let soulClarity = parseInt(saveSplit[2], 10);
+      soulClarity = isNaN(soulClarity) ? 1 : soulClarity;
+
+      const loadedBuild = {
+        name: "Loaded S Build",
+        efficient,
+        facet: getFacetByNumber(clsNumber) || "Magia Maid", // should constant ref but
+        soulClarity: soulClarity,
+        skills: skillNumList.split("-").filter(x => getSkillByNumber(x)).map(num => {
+          const skill = getSkillByNumber(num);
+
+          return {
+            name: skill.name,
+            description: skill.description,
+            facet: skill.facet,
+            innate: skill.innate,
+            color: skill.color,
+            level: skill.level,
+            cost: skill.cost
+          };
+        })
+      };
+
+      if (!assign) {
+        setMyBuild(loadedBuild);
+      }
+      setStartingSoulClarity(soulClarity);
+
+      return loadBuild;
+    }
+
+    if (!assign) {
+      alert("Invalid build!");
+    }
+
+    return undefined;
+  };
+
+  const saveBuild = noPrompt => {
+    const skillNumberStr = myBuild.skills
+      .filter(x => x.name !== "")
+      .map(x => getSkillNumberByName(x.name))
+      .join("-");
+    const clarity = isNaN(myBuild.soulClarity) ? 1 : myBuild.soulClarity;
+    const saveStr = `${getFacetNumber(myBuild.facet)}_${skillNumberStr}_${clarity}`;
+
+    if (!noPrompt) {
+      window.prompt(`CTRL+C to Copy Build\n${window.location.href}`, saveStr);
+    }
+
+    return saveStr;
+  };
 
   useEffect(() => {
     initSkills();
@@ -42,7 +102,20 @@ export default function App() {
   }, [efficient]);
 
   useEffect(() => {
-    setFinalSteps(getFacetOrder(myBuild));
+    if (myBuild.name === "Blank Build") {
+      const buildStr = window.location.pathname.split("/").pop();
+      if (isValidBuildString(buildStr)) {
+        loadBuild(buildStr);
+      }
+    } else {
+      setFinalSteps(getFacetOrder(myBuild));
+
+      if (DYNAMIC_URL) {
+        const buildString = saveBuild(true);
+        const isValid = isValidBuildString(buildString);
+        window.history.replaceState({ page: 1 }, document.title, `/${isValid ? buildString : ''}`);
+      }
+    }
   }, [myBuild]);
 
   useEffect(() => {
@@ -69,94 +142,6 @@ export default function App() {
     };
     setMyBuild(tempBuild);
   }, [startingSoulClarity]);
-
-  const loadBuild = () => {
-    // load build from clipboard
-    const newBuildRaw = window.prompt("Paste Build Here: ", "");
-    if (newBuildRaw && newBuildRaw.length > 0) {
-      if (!isJsonString(newBuildRaw)) {
-        // first check if SHORT save
-        const underCount = newBuildRaw.split("").filter(x => x === "_").length;
-        if (underCount >= 2) {
-          // okay, SHORT save found!
-          const saveSplit = newBuildRaw.split("_");
-          const clsNumber = saveSplit[0];
-          const skillNumList = saveSplit[1];
-          let soulClarity = parseInt(saveSplit[2], 10);
-          soulClarity = isNaN(soulClarity) ? 1 : soulClarity;
-
-          const loadedBuild = {
-            name: "Loaded S Build",
-            facet: getFacetByNumber(clsNumber),
-            soulClarity: soulClarity,
-            skills: skillNumList.split("-").map(num => {
-              const skill = getSkillByNumber(num);
-
-              return {
-                name: skill.name,
-                description: skill.description,
-                facet: skill.facet,
-                innate: skill.innate,
-                color: skill.color,
-                level: skill.level,
-                cost: skill.cost
-              };
-            }),
-            efficient
-          };
-
-          setMyBuild(loadedBuild);
-          setStartingSoulClarity(soulClarity);
-          return;
-        }
-
-        alert("Invalid build!");
-        return;
-      }
-
-      const tempBuild = JSON.parse(newBuildRaw);
-
-      // new save
-      const loadedBuild = {
-        name: "Loaded Build",
-        facet: tempBuild.facet,
-        soulClarity: tempBuild.soulClarity,
-        efficient: efficient,
-        skills: tempBuild.skills.map(x => {
-          const skill = getSkillByName(x);
-
-          return {
-            name: skill.name,
-            description: skill.description,
-            facet: skill.facet,
-            innate: skill.innate,
-            color: skill.color,
-            level: skill.level,
-            cost: skill.cost
-          };
-        })
-      };
-
-      for (let i = loadedBuild.skills.length; i <= 12; i++) {
-        loadedBuild.skills.push(newSkill());
-      }
-
-      setMyBuild(loadedBuild);
-    }
-  };
-
-  const saveBuild = () => {
-    const skillNumberStr = myBuild.skills
-      .filter(x => x.name !== "")
-      .map(x => getSkillNumberByName(x.name))
-      .join("-");
-    const clarity = isNaN(myBuild.soulClarity) ? 1 : myBuild.soulClarity;
-    const saveStr = `${getFacetNumber(myBuild.facet)}_${skillNumberStr}_${
-      clarity
-    }`;
-
-    window.prompt("CTRL+C to Copy Build", saveStr);
-  };
 
   const isDuplicateSkill = skill => {
     for (const s of myBuild.skills) {
@@ -209,6 +194,10 @@ export default function App() {
     };
 
     setMyBuild(newMyBuild);
+  };
+
+  const resetBuild = () => {
+    setMyBuild(newBuild("Reset Build", efficient, myBuild.facet));
   };
 
   const changeClass = cls => {
@@ -318,14 +307,8 @@ export default function App() {
         />
       </div>
       <Directions steps={finalSteps} hide={!seeDirections} />
-      {/* <CharacterPortrait className={myBuild.facet} />*/}
+      {<CharacterPortrait facetName={myBuild.facet} />}
       <div className="ButtonsDiv">
-        {seeDirections && <button
-          className="ModeButton"
-          onClick={() => setEfficient(!efficient)}
-        >
-          {efficient ? "Mode: Efficient" : "Mode: Quickest"}
-        </button>}
         <button
           className="ToggleButton"
           onClick={() => setSeeDirections(!seeDirections)}
@@ -333,25 +316,13 @@ export default function App() {
             backgroundColor: "#dcfcd4",
             borderRadius: "25px",
             borderStyle: "double",
-            cursor: "pointer"
+            fontWeight: "bold"
           }}
         >
           Toggle
         </button>
-        <a
-          className="ToggleButton LinkButton"
-          style={{ margin: "1em", display: "none" }}
-          type="button"
-          href={`data:text/json;charset=utf-8,${encodeURIComponent(
-            JSON.stringify(myBuild)
-          )}`}
-          download="coven_build.json"
-        >
-          Save Build
-        </a>
         <button
           className="ToggleButton"
-          style={{ margin: "1em" }}
           onClick={() => saveBuild()}
         >
           Save Build
@@ -359,12 +330,23 @@ export default function App() {
         <button className="ToggleButton" onClick={() => loadBuild()}>
           Load Build
         </button>
+        {seeDirections && <button
+          className="ToggleButton ModeButton"
+          onClick={() => setEfficient(!efficient)}
+        >
+          {efficient ? "Mode: Efficient" : "Mode: Quickest"}
+        </button>}
+        <label
+          className="soulClarityLabel"
+          htmlFor="startingSoulClarity"
+        >Starting Soul Clarity:</label>
         <input
+          id="startingSoulClarity"
           placeholder="Starting Clarity"
           title="Starting Clarity"
           type="number"
           list="souls"
-          style={{ width: "8em", marginLeft: "1em" }}
+          style={{ width: "4em" }}
           value={startingSoulClarity}
           min={1}
           max={999}
@@ -378,6 +360,10 @@ export default function App() {
           <option label="Small Soul / CII" value="4"></option>
           <option label="Small Soul / CIII" value="8"></option>
         </datalist>
+        <div style={{ width: "5em" }}></div>
+        <button className="ToggleButton" style={{ backgroundColor: "#f1adad" }} onClick={() => resetBuild()}>
+          Clear Skills
+        </button>
         <MusicButton />
         <small><a style={{ color: "aqua" }} href="https://github.com/cecilbowen/galleriaclassbuilder">Source Code</a></small>
       </div>
