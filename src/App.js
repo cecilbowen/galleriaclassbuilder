@@ -107,14 +107,15 @@ export default function App() {
       if (isValidBuildString(buildStr)) {
         loadBuild(buildStr);
       }
-    } else {
-      setFinalSteps(getFacetOrder(myBuild));
+    }
 
-      if (DYNAMIC_URL) {
-        const buildString = saveBuild(true);
-        const isValid = isValidBuildString(buildString);
-        window.history.replaceState({ page: 1 }, document.title, `/${isValid ? buildString : ''}`);
-      }
+    setFinalSteps(getFacetOrder(myBuild));
+
+    if (DYNAMIC_URL) {
+      const buildString = saveBuild(true);
+      const isValid = isValidBuildString(buildString);
+      const urlString = `/galleriaclassbuilder/${buildString}`;
+      window.history.replaceState({ page: 1 }, document.title, `${isValid ? urlString : ''}`);
     }
   }, [myBuild]);
 
@@ -197,6 +198,8 @@ export default function App() {
   };
 
   const resetBuild = () => {
+    window.history.replaceState({ page: 1 }, document.title, '/galleriaclassbuilder/');
+
     setMyBuild(newBuild("Reset Build", efficient, myBuild.facet));
   };
 
