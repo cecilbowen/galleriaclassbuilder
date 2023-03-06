@@ -64,7 +64,7 @@ export default function App() {
       }
       setStartingSoulClarity(soulClarity);
 
-      return loadBuild;
+      return loadedBuild;
     }
 
     if (!assign) {
@@ -103,19 +103,19 @@ export default function App() {
 
   useEffect(() => {
     if (myBuild.name === "Blank Build") {
-      const buildStr = window.location.pathname.split("/").pop();
+      const buildStr = window.location.href.split("?build=").pop();
       if (isValidBuildString(buildStr)) {
         loadBuild(buildStr);
       }
-    }
+    } else {
+      setFinalSteps(getFacetOrder(myBuild));
 
-    setFinalSteps(getFacetOrder(myBuild));
-
-    if (DYNAMIC_URL) {
-      const buildString = saveBuild(true);
-      const isValid = isValidBuildString(buildString);
-      const urlString = `/galleriaclassbuilder/${buildString}`;
-      window.history.replaceState({ page: 1 }, document.title, `${isValid ? urlString : ''}`);
+      if (DYNAMIC_URL) {
+        const buildString = saveBuild(true);
+        const isValid = isValidBuildString(buildString);
+        const urlString = `/galleriaclassbuilder/?build=${buildString}`;
+        window.history.replaceState({ page: 1 }, document.title, `${isValid ? urlString : '/galleriaclassbuilder/'}`);
+      }
     }
   }, [myBuild]);
 
@@ -172,7 +172,7 @@ export default function App() {
 
     const newMyBuild = {
       skills: tempBuildSkills,
-      name: myBuild.name,
+      name: "Modded Build",
       soulClarity: startingSoulClarity,
       facet: myBuild.facet,
       efficient: efficient
