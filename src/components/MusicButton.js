@@ -24,18 +24,19 @@ const MusicButton = props => {
 
   return (
     <div>
-      <button onClick={() => setPlaying(!playing)}>
+      <button className="ToggleButton" style={{ width: "45px" }} onClick={() => setPlaying(!playing)}>
         {playing ? "Pause" : "Play"}
       </button>
       <input
         type="range"
         id="volume-coven"
+        title="Adjust music volume"
         value={volume}
         max={"1"}
         min={"0"}
         step={"0.05"}
         onChange={ev => setVolume(ev.currentTarget.value)}
-        style={{ verticalAlign: "top" }}
+        style={{ verticalAlign: "top", marginLeft: "1em", width: "7em", cursor: "pointer" }}
       />
     </div>
   );

@@ -59,9 +59,16 @@ body {
 }
 
 .ButtonsDiv {
+  display: flex;
+  flex-wrap: wrap;
+  width: 23em;
   position: fixed;
   bottom: 3vh;
-  right: 2em;
+  right: 4em;
+}
+
+.ButtonsDiv>* {
+  margin: 5px;
 }
 
 .CharacterPortrait {
@@ -126,32 +133,26 @@ body {
   margin: 10px;
 }
 
+.soulClarityLabel {
+  color: white;
+  line-height: 20px;
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 14px;
+}
+
 .ToggleButton {
-  width: 6em;
-  height: 2em;
+  width: fit-content;
+  height: fit-content;
+  cursor: pointer;
 }
 
 .ModeButton {
-  width: 10em;
-  height: 2em;
   margin-right: 1em;
   background-color: tan;
   border-radius: 25px;
   border-style: double;
   cursor: pointer;
-}
-
-.LinkButton {
-  -webkit-appearance: button;
-  -moz-appearance: button;
-  appearance: button;
-  text-decoration: none;
-  color: initial;
-  border: 1px solid black;
-  border-radius: 4px;
-  vertical-align: middle;
-  height: -webkit-fill-available;
-  background-color: bisque;
 }
 
 .Directions-BG {
