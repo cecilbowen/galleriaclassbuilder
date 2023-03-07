@@ -754,7 +754,7 @@
   {
     "name": "Therapeutic Dance",
     "description": "Heal 15% HP per turn and 3% HP to adjacent soldiers if attacker.  If supporter, 1% HP to Coven attackers.",
-    "correctedDescription": "If attacker, heal 3% HP to self per turn, and adjacent attackers heal 15% HP at end of battle.  If supporter, heals Coven attackers HP by 1% per turn.",
+    "correctedDescription": "If attacker, heals adjacent soldiers 3% HP per turn and 15% HP per battle end.  If supporter, heals Coven attackers HP by 1% per turn.",
     "cost": 50,
     "orbColor": "red",
     "category": false,

@@ -67,7 +67,7 @@ export default function App() {
       return loadedBuild;
     }
 
-    if (!assign) {
+    if (!assign && newBuildRaw) {
       alert("Invalid build!");
     }
 

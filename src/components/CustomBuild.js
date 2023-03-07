@@ -68,6 +68,16 @@ const CustomBuild = ({ changeClass, facetName, editBuild, hide, skills }) => {
       </div>
     ;
 
+    let guideRow = <tr>
+      <td className="SkillFrame GuideRow" colSpan={2}>Add Skills from the Tables on the Left</td>
+    </tr>;
+
+    if (tableData.length > 0) {
+      guideRow = <tr>
+        <td className="SkillFrame GuideRow" colSpan={2}>Click on Added Skills Above to Remove Them</td>
+      </tr>;
+    }
+
     return (
       <table className={"FacetResultTable"}>
         <tbody className={"FacetResultTable-body"}>
@@ -88,6 +98,7 @@ const CustomBuild = ({ changeClass, facetName, editBuild, hide, skills }) => {
             </th>
           </tr>
           {tableData.map((x, i) => renderTableRow(x, i, true))}
+          {guideRow}
         </tbody>
       </table>
     );

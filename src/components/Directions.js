@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from 'prop-types';
 import { getFacetColor, getSkillByName, DISCOUNT_COLORS, getSkillPointsAddedFromSoulClarity,
-  getSoulClarityToHitSkillPoints,
+  getSoulClarityToHitSkillPoints, getSoulTransfersToReachSoulClarity,
   getSkillDiscountedCost, isInExclusiveCategory, DISCOUNTS } from "../utils";
 
 const Directions = ({ hide, steps }) => {
@@ -66,52 +66,52 @@ const Directions = ({ hide, steps }) => {
     setSkillsChecked(tempChecked);
   };
 
-  const renderTableRow = (rowData, index) => {
-    const className = rowData.facet;
-    const rowSkills = rowData.skills; // name, description, innate, color, level
+  const renderStep = (step, index) => {
+    const className = step.facet;
+    const rowSkills = step.skills; // name, description, innate, color, level
 
     const ret = [];
 
     const clsStats =
-      <div style={{ fontSize: "8px" }}>Soul Clarity: {rowData.soulClarity}</div>
+      <div style={{ fontSize: "8px" }}>Soul Clarity: {step.soulClarity}</div>
     ;
 
     const color = getFacetColor(className);
     const headerColor = `linear-gradient(${color} -40%, #212c2f 80%, #212c2f 10%)`;
 
     ret.push(
-      <tr key={`${className}-class`}>
-        <td
-          className={"SkillFrame"}
+      <div key={`${className}-class`}>
+        <div
+          className={"SkillFrame SkillFramePadding"}
           style={{
             backgroundImage: headerColor
           }}
         >
           {index === 0 && "Start at "}
           {className}: {clsStats}
-        </td>
-      </tr>
+        </div>
+      </div>
     );
 
+    ret.push(<div style={{ margin: "5px 0px 0px 0px" }} className="FlexBreak" />);
+
     const sameRow = [];
-    let numOfCols = 1;
     for (let i = 0; i < rowSkills.length; i++) {
       const s = rowSkills[i];
       const autoLearn = s.learn ? "on soul transfer" : `at level ${s.level}`;
       const alreadyKnow = `${s.name} is innate (already learned)`;
 
       sameRow.push(
-        <td key={`${className}-skill-${i}`} className={"Directions-cell"}>
+        <div key={`${className}-skill-${i}`} className={"Directions-cell"}>
           {s.innate ? alreadyKnow : `Learn ${s.name} ${autoLearn}`}
-        </td>
+        </div>
       );
-      numOfCols = i;
     }
 
     ret.push(
-      <tr key={`${className}-sameRow`} colSpan={`${ numOfCols}`}>
+      <div key={`${className}-sameRow`} className="SkillLevelSteps">
         {sameRow}
-      </tr>
+      </div>
     );
 
     // if last one
@@ -120,23 +120,30 @@ const Directions = ({ hide, steps }) => {
     }
 
     ret.push(
-      <tr key={`${className}-transfer`} style={{ fontWeight: "bold" }}>
-        <td className={"Directions-SoulTransfer"}>
-          Soul transfer at level {rowData.transferLevel}
-        </td>
-      </tr>
+      <div key={`${className}-transfer`} className={"Directions-SoulTransfer"}>
+        Soul transfer at level {step.transferLevel}
+      </div>
     );
 
-    return ret;
+    ret.push(<div className="FlexBreak" />);
+    ret.push(
+      <div className="FancyDividerDiv">
+        <div className="FancyDivider" />
+      </div>
+    );
+
+    return <div className="StepsContainer">
+      {ret}
+    </div>;
   };
 
-  const renderTable = tableData => {
+  const renderSteps = theSteps => {
     return (
-      <table className={"Directions"}>
-        <tbody className={"Directions-body"}>
-          {tableData.map((x, i) => renderTableRow(x, i))}
-        </tbody>
-      </table>
+      <div className={"Directions"}>
+        <div className={"Directions-body"}>
+          {theSteps.map((x, i) => renderStep(x, i))}
+        </div>
+      </div>
     );
   };
 
@@ -151,7 +158,7 @@ const Directions = ({ hide, steps }) => {
         <div className="SkillCheck" onClick={() => toggleSkill(skill)}>{skill.checked ? "✔" : ""}</div>
         <div
           style={{ background: `linear-gradient(${rawSkill.orbColor}, ${rawSkill.orbColor}, white)` }}
-          className="SkillOrb">か</div>
+          className="SkillOrb noselect">か</div>
         <div style={{ color }} className="SkillText">{skill.name}</div>
         <div className="DiscountTag">
           <div style={{ position: "relative", width: "2px" }}>
@@ -180,9 +187,40 @@ const Directions = ({ hide, steps }) => {
     }
 
     const targetSoulClarity = getSoulClarityToHitSkillPoints(skillPoints, skillStars);
+    const targetSoulClarityWith1 = getSoulClarityToHitSkillPoints(skillPoints, 1);
+    const targetSoulClarityWith2 = getSoulClarityToHitSkillPoints(skillPoints, 2);
+
+    console.log(`you need ${targetSoulClarity} soul clarity to hit ${skillPoints} skill points.`);
+    let soulClarityGoal = "";
+    let subGoal = "";
+    const subGoals = [];
+    if (targetSoulClarity < 0) {
+      soulClarityGoal = `Required skill points exceed max (268)!`;
+      if (targetSoulClarityWith1 >= 0) {
+        subGoal = "1 Witch Petition Required (click ★)";
+      }
+      if (targetSoulClarityWith2 >= 0) {
+        subGoal = "2 Witch Petitions Required (click ★)";
+      }
+    } else if (targetSoulClarity > soulClarity) {
+      const soulTransfersNeeded = getSoulTransfersToReachSoulClarity(soulClarity, targetSoulClarity);
+      soulClarityGoal = `Target Soul Clarity: ${targetSoulClarity}`;
+      if (soulTransfersNeeded.level99Transfers > 0) {
+        const s = soulTransfersNeeded.level99Transfers > 1 ? "s" : "";
+        subGoals.push(`${soulTransfersNeeded.level99Transfers} level 99 soul transfer${s}`);
+      }
+
+      if (soulTransfersNeeded.finalTransferLevel > 0) {
+        subGoals.push(`1 level ${soulTransfersNeeded.finalTransferLevel} soul transfer`);
+      }
+      subGoal = `Transfers Needed: ${subGoals.join(" + ")}`;
+    }
 
     return (
       <div className="SkillPointDisplay">
+        <div style={{ color: 'white' }}>
+          {soulClarityGoal}<br />{subGoal}
+        </div>
         <div className="SkillFrame SkillHeader noselect">
           Skill Points {skillPoints} / {maxSkillPoints}
           <span
@@ -197,16 +235,13 @@ const Directions = ({ hide, steps }) => {
         <div className="SkillPointTable">
           {skills.map((x, i) => renderSkillTableRow(x, i))}
         </div>
-        <div style={{ color: 'white', display: 'none' }}>
-          {targetSoulClarity} soul clarity required to hit desired skill points.
-        </div>
       </div>
     );
   };
 
   return (
     <div className={"Directions-BG"} style={{ display: hide ? "none" : "" }}>
-      {steps && renderTable(steps)}
+      {steps && renderSteps(steps)}
       {steps && renderSkillTable()}
     </div>
   );

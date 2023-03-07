@@ -429,6 +429,7 @@ export const isInExclusiveCategory = (skillAA, skillBB) => {
 };
 
 export const getSkillPointsAddedFromSoulClarity = soulClarity => {
+  soulClarity = Math.min(soulClarity, 999);
   if (soulClarity <= 99) {
     return soulClarity - 1;
   }
@@ -437,17 +438,44 @@ export const getSkillPointsAddedFromSoulClarity = soulClarity => {
 };
 
 export const getSoulClarityToHitSkillPoints = (skillPointsTarget, numPetitions) => {
-  const withoutWitchPetitions = (skillPointsTarget - 40 - 99) * 10 + 109;
-  const with1WitchPetition = (skillPointsTarget - 50 - 99) * 10 + 109;
-  const with2WitchPetitions = (skillPointsTarget - 80 - 99) * 10 + 109;
-
-  if (numPetitions === 1) {
-    return with1WitchPetition;
-  } else if (numPetitions === 2) {
-    return with2WitchPetitions;
+  // fuck it, math is hard
+  let target = skillPointsTarget - 40;
+  if (numPetitions >= 1) {
+    target -= 10;
+  }
+  if (numPetitions >= 2) {
+    target -= 30;
   }
 
-  return withoutWitchPetitions;
+  if (target <= 0) {
+    return 0;
+  }
+
+  for (let i = 1; i < 1000; i++) {
+    const sp = getSkillPointsAddedFromSoulClarity(i);
+    if (sp >= target) {
+      return i;
+    }
+  }
+
+  return -1;
+};
+
+export const getSoulTransfersToReachSoulClarity = (currentSoulClarity, targetSoulClarity) => {
+  const soulClarityNeeded = targetSoulClarity - currentSoulClarity;
+  const soulClarityGainPer99 = CLARITY_STOPS.length - 1;
+  const level99Transfers = Math.floor(soulClarityNeeded / soulClarityGainPer99);
+  const remainder = soulClarityNeeded % soulClarityGainPer99;
+  let finalTransferLevel = CLARITY_STOPS[remainder];
+
+  if (remainder === 0) {
+    finalTransferLevel = 0;
+  }
+
+  return {
+    level99Transfers,
+    finalTransferLevel
+  };
 };
 
 export const getFacetColor = facetName => {
