@@ -19,6 +19,7 @@ Skill Point Caps/Increases
 
 skill acquire levels
     skills are learned in order from top to bottom at the following levels: 4, 8, 12, 17, 22, 28, 34, 41, 48, 56, 63, 72, 81
+      after soul transferring, these levels can vary some.  still not sure what determines the variance
     so, 0 + (4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 7, 9, 9)
     choosing your "free" skill just means that at the level you would have learned the skill, nothing happens
       (since you already have it)

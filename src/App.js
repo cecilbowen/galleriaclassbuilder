@@ -28,6 +28,7 @@ export default function App() {
   const [filterString, setFilterString] = useState("");
   const [filterTag1, setFilterTag1] = useState("");
   const [filterTag2, setFilterTag2] = useState("");
+  const [filterDonums, setFilterDonums] = useState(false);
 
   const loadBuild = (buildStr, assign) => {
     // load build from clipboard
@@ -226,6 +227,7 @@ export default function App() {
           key={i}
           header={clsName}
           skills={skills}
+          filterDonums={filterDonums}
           filterString={filterString}
           filterTags={[filterTag1, filterTag2]}
         />
@@ -252,14 +254,25 @@ export default function App() {
 
     return (
       <div className="FilterDiv">
-        <input
-          className="FilterBar"
-          type="text"
-          id="filter"
-          name="filter"
-          onChange={ev => setFilterString(ev.target.value)}
-          placeholder="Search skills"
-        />
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <input
+            className="FilterBar"
+            type="text"
+            id="filter"
+            name="filter"
+            onChange={ev => setFilterString(ev.target.value)}
+            placeholder="Search skills"
+          />
+          <label htmlFor="donumFilter" className="noselect" style={{ cursor: "pointer" }}>
+          Filter out donums
+          <input
+              type="checkbox"
+              id="donumFilter"
+              name="accept"
+              value="no"
+              onClick={() => setFilterDonums(!filterDonums)} />
+          </label>
+        </div>
         <div className="FilterTags noselect">
           {tags.map((x, i) =>
             <div

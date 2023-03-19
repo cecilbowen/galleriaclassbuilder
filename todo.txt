@@ -8,3 +8,5 @@ clean up code (comments, using maps when cleaner to use arrays, etc)
 correct skill mistranslations by updating the correctedDescription fields (https://redd.it/11j57pf)
 add a new "Mode: Automatic" that chooses the best facet for the skills you've chosen (least amount of skill cost)
 add "initialCost" and "classCost" fields to all skills to account for some skill discount discrepancies
+figure out variance in level of learned skills post soul transfer
+x make sure alt classes with innate skill are ordered correctly AFTER other < level 99 soul transfer classes in the route

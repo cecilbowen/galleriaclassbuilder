@@ -2,15 +2,19 @@ import React, { useState } from "react";
 import { getFacetColor } from "../utils";
 import PropTypes from 'prop-types';
 
-const FacetTable = ({ header, editBuild, filterString, filterTags, skills }) => {
+const FacetTable = ({ header, editBuild, filterDonums, filterString, filterTags, skills }) => {
   const [color] = useState(getFacetColor(header));
 
   const fString = filterString.toLowerCase();
   const fTags = filterTags;
   let theSkills = skills;
 
+  if (filterDonums) {
+    theSkills = theSkills.filter(x => !x.tags.join("").includes("Learn"));
+  }
+
   if (fTags[0]) {
-    theSkills = skills.slice(0).filter(sk => {
+    theSkills = theSkills.slice(0).filter(sk => {
       let skTags = sk.tags.filter(tag => tag.includes(fTags[0]));
       skTags = skTags.filter(tag => !fTags[1] || tag.includes(fTags[1]));
 

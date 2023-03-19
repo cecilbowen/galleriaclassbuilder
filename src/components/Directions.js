@@ -195,7 +195,7 @@ const Directions = ({ hide, steps }) => {
     let subGoal = "";
     const subGoals = [];
     if (targetSoulClarity < 0) {
-      soulClarityGoal = `Required skill points exceed max (268)!`;
+      soulClarityGoal = `Required skill points exceeded (max: 268)!`;
       if (targetSoulClarityWith1 >= 0) {
         subGoal = "1 Witch Petition Required (click ★)";
       }

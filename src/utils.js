@@ -295,6 +295,21 @@ export const getFacetOrder = build => {
     }
   }
 
+  let stop = false;
+  for (const daStep of reOrdered) {
+    if (daStep.facet === getFacetAltByName(targetFacet.facet)) {
+      for (const sk of daStep.skills) {
+        if (sk.innate) {
+          daStep.order = 998;
+          stop = true;
+          break;
+        }
+      }
+    }
+
+    if (stop) { break; }
+  }
+
   reOrdered.sort((a, b) => {
     return a.order - b.order;
   });
