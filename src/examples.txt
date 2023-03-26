@@ -1,8 +1,10 @@
+disclaimer: personal builds in progress, brackets [] denote names of personal characters using build, and are solely for me to keep track
+
 peer fortress (defense and guard)
 8_3-247-38-144-142-310-305-302-122-131-128-357-24-18-158-203-324-120-121-300-309-301_1
 
-shinobushi (overskilled)
-14_106-109-166-212-252-269-279-297-359-211-210-330-342-119_1
+shinobushi (evasion)
+14_109-166-252-269-297-359-211-210-330-342-119-178-144_1
 
 famyu chaser (pure supporter)
 11_97-113-86-150-161-173-179-176-180-205-228-260-264-339-348_1
@@ -10,7 +12,26 @@ famyu chaser (pure supporter)
 prima reaper (evasion)
 7_106-109-144-178-269-279-359-105-59-16-47-49_1
 
+magia concieri (magic attacker)
+12_0-181-194-12-13-192-185_1
 
+magia concieri (magic supporter)
+12_181-194-12-13-192_1
+
+aster scroll fighter
+1_327-145-323-42-68-72-244-240-241-104_1
+
+rapid raptor (dual-wield crossbow multi hit) [albert]
+22_211-31-240-254-331-341-172-154-164-151-334-333_1
+
+wonder viande (exp farmer) [bittern ko]
+21_329-152-182-336-346-98-151_1
+
+famyu seeker (cat pact, evasion) [chelios]
+11_166-252-297-359-211-330-342-119-178-144-346-345-171-15_1
+
+wonder viande (super stun) [elisa, andre, lady luna]
+21_69-276-322-323-143-240-254-319-320-333-267-68-315-135-136-274-281_1
 
 ===============================================
 target: peer fortress, fastest route

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { colors, names } from "../facets";
-import { getFacetColor, getFacetAltByName } from "../utils";
+import { getFacetColor, getFacetAltByName, getSkillByName } from "../utils";
 import PropTypes from 'prop-types';
 
 const CustomBuild = ({ changeClass, facetName, editBuild, hide, skills }) => {
@@ -35,31 +35,56 @@ const CustomBuild = ({ changeClass, facetName, editBuild, hide, skills }) => {
     setCustomClass(getFacetAltByName(customClass));
   };
 
-  const renderCell = (data, style) => {
+  const renderCell = (data, style, skill) => {
+    let tags = [];
+
+    if (skill) {
+      skill = getSkillByName(skill.name);
+      tags = skill.tags.map(x => `${x.join(" ")}`);
+    }
+
+    const title = "Right-click to find the skill's table on the left.";
+
     return (
-      <td style={style || {}} className={"SkillFrame CustomBuild-cell noselect"}>
+      <td style={style || {}} className={"SkillFrame CustomBuild-cell noselect"}
+        title={title}
+      >
+        {skill && <div className="tags">
+            {tags.map((x, i) => <div key={`skillframe-tag-${i}`} className="tag">{x}</div>)}
+          </div>}
         {data}
       </td>
     );
   };
 
-  const renderTableRow = (rowData, index, result) => {
-    const cellColor = `linear-gradient(${rowData.color} -50%, #212c2f 60%, #212c2f 10%)`;
-    const style = rowData.name === "" ? {} : { backgroundImage: cellColor };
+  const renderTableRow = (rowSkill, index, result) => {
+    const cellColor = `linear-gradient(${rowSkill.color} -50%, #212c2f 60%, #212c2f 10%)`;
+    const style = rowSkill.name === "" ? {} : { backgroundImage: cellColor };
 
     return (
       <tr
         key={`tr-${index}`}
         className={result ? "FacetResultTable-row" : "FacetTable-row"}
-        onClick={() => editBuild(rowData)}
+        onClick={() => editBuild(rowSkill)}
+        onContextMenu={ev => {
+          ev.preventDefault();
+          const header = [...document.getElementsByClassName("SkillFrame-header")]
+            .filter(x => x.innerText.toLowerCase() === rowSkill.facet.toLowerCase())[0];
+
+          if (header) {
+            header.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+
+          return false;
+        }}
       >
-        {renderCell(rowData.name + (rowData.innate ? " (Innate)" : ""), style)}
-        {renderCell(rowData.description, style)}
+        {renderCell(rowSkill.name + (rowSkill.innate ? " (Innate)" : ""), style)}
+        {renderCell(rowSkill.description, {}, rowSkill)}
       </tr>
     );
   };
 
-  const renderTable = tableData => {
+  const renderTable = tableSkills => {
     const headerColor = `linear-gradient(${customColor} -40%, #212c2f 80%, #212c2f 10%)`;
 
     const cycleTooltip =
@@ -72,7 +97,7 @@ const CustomBuild = ({ changeClass, facetName, editBuild, hide, skills }) => {
       <td className="SkillFrame GuideRow" colSpan={2}>Add Skills from the Tables on the Left</td>
     </tr>;
 
-    if (tableData.length > 0) {
+    if (tableSkills.length > 0) {
       guideRow = <tr>
         <td className="SkillFrame GuideRow" colSpan={2}>Click on Added Skills Above to Remove Them</td>
       </tr>;
@@ -97,7 +122,7 @@ const CustomBuild = ({ changeClass, facetName, editBuild, hide, skills }) => {
               Custom {customClass} {cycleTooltip}
             </th>
           </tr>
-          {tableData.map((x, i) => renderTableRow(x, i, true))}
+          {tableSkills.map((x, i) => renderTableRow(x, i, true))}
           {guideRow}
         </tbody>
       </table>

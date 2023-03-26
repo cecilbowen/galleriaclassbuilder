@@ -109,6 +109,12 @@ export default function App() {
         loadBuild(buildStr);
       }
     } else {
+      myBuild.skills.sort((a, b) => {
+        if (a.facet > b.facet) { return 1; }
+        if (a.facet < b.facet) { return -1; }
+        return 0;
+      });
+
       setFinalSteps(getFacetOrder(myBuild));
 
       if (DYNAMIC_URL) {

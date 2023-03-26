@@ -355,7 +355,6 @@ body {
 .CustomBuild-cell {
   height: 2em;
   overflow: hidden;
-  min-width: 20em;
 }
 
 .CustomBuild-header {
@@ -386,7 +385,7 @@ body {
 }
 
 .FacetResultTable {
-  table-layout: fixed;
+  table-layout: auto;
   display: table;
   width: 100%;
   padding: 0em 1em 1em 1em;

@@ -4763,7 +4763,7 @@
   },
   {
     "name": "Lightning Tackle",
-    "description": "Stun valu +1400, but Critical value -20.",
+    "description": "Stun value +1400, but Critical value -20.",
     "cost": 13,
     "orbColor": "red",
     "category": false,
