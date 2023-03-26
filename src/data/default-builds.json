@@ -1,0 +1,23 @@
+[
+    {
+        "id": 0,
+        "name": "Guard Tank",
+        "facet": "Peer Fortress",
+        "build": "8_3-247-38-144-142-310-305-302-122-131-128-357-24-18-158-203-324-120-121-300-309-301_1",
+        "description": "A basic tank build for protecting others from attacks."
+    },
+    {
+        "id": 1,
+        "name": "Simple Magic Stacker",
+        "facet": "Magia Concieri",
+        "build": "12_0-181-194-12-13-192-185_1",
+        "description": "An offensive magic build that is best used with a full coven of similar members buffing DP and DMP."
+    },
+    {
+        "id": 2,
+        "name": "Thundering Pact Stunner",
+        "facet": "Wonder Viande",
+        "build": "21_69-276-322-323-143-240-254-319-320-333-267-68-315-135-136-274-281_1",
+        "description": "A stun build best used in the Thundering Pact that boosts Wonder Viande stats."
+    }
+]

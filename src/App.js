@@ -3,15 +3,15 @@ import "./styles.css";
 import { initSkills, getAllFacets } from "./facets";
 import SKILLS from "./data/skills.json";
 import FacetTable from "./components/FacetTable";
+import BuildBrowser from "./components/BuildBrowser";
 import CharacterPortrait from "./components/CharacterPortrait";
 import {
   newBuild,
   getFacetOrder,
   isValidBuildString,
-  getSkillNumberByName,
-  getFacetNumber,
   getFacetByNumber,
   getSkillByNumber,
+  generateBuildString,
   TAG_DESCRIPTIONS
 } from "./utils";
 import CustomBuild from "./components/CustomBuild";
@@ -23,8 +23,9 @@ export default function App() {
   const [myBuild, setMyBuild] = useState(newBuild("Blank Build", true));
   const [finalSteps, setFinalSteps] = useState(undefined);
   const [seeDirections, setSeeDirections] = useState(false);
+  const [seeBrowser, setSeeBrowser] = useState(false);
   const [startingSoulClarity, setStartingSoulClarity] = useState(1);
-  const [efficient, setEfficient] = useState(true);
+  const [efficient] = useState(true);
   const [filterString, setFilterString] = useState("");
   const [filterTag1, setFilterTag1] = useState("");
   const [filterTag2, setFilterTag2] = useState("");
@@ -76,12 +77,7 @@ export default function App() {
   };
 
   const saveBuild = noPrompt => {
-    const skillNumberStr = myBuild.skills
-      .filter(x => x.name !== "")
-      .map(x => getSkillNumberByName(x.name))
-      .join("-");
-    const clarity = isNaN(myBuild.soulClarity) ? 1 : myBuild.soulClarity;
-    const saveStr = `${getFacetNumber(myBuild.facet)}_${skillNumberStr}_${clarity}`;
+    const saveStr = generateBuildString(myBuild.facet, myBuild.skills, myBuild.soulClarity);
 
     if (!noPrompt) {
       window.prompt(`CTRL+C to Copy Build\n${window.location.href}`, saveStr);
@@ -315,10 +311,17 @@ export default function App() {
 
   return (
     <div className="App">
-      {renderFilter()}
-      <div style={{ width: "60vw", marginTop: "6.5em" }}>
+      {!seeBrowser && renderFilter()}
+      {!seeBrowser && <div style={{ width: "60vw", marginTop: "6.5em" }}>
         {renderBaseClasses()}
-      </div>
+      </div>}
+      {seeBrowser && <BuildBrowser
+        currentFacet={myBuild.facet}
+        currentSkills={myBuild.skills}
+        currentSoulClarity={myBuild.soulClarity}
+        onCloseBrowser={() => setSeeBrowser(false)}
+        onLoadBuild={build => loadBuild(build)}
+      />}
       <div className="CustomBuild">
         <CustomBuild
           facetName={myBuild.facet}
@@ -347,16 +350,16 @@ export default function App() {
           className="ToggleButton"
           onClick={() => saveBuild()}
         >
-          Save Build
+          Export Build
         </button>
         <button className="ToggleButton" onClick={() => loadBuild()}>
-          Load Build
+          Import Build
         </button>
-        {seeDirections && <button
+        {<button
           className="ToggleButton ModeButton"
-          onClick={() => setEfficient(!efficient)}
+          onClick={() => setSeeBrowser(!seeBrowser)}
         >
-          {efficient ? "Mode: Efficient" : "Mode: Quickest"}
+          Build Browser
         </button>}
         <label
           className="soulClarityLabel"

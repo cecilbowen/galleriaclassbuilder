@@ -86,6 +86,18 @@ const Directions = ({ hide, steps }) => {
           style={{
             backgroundImage: headerColor
           }}
+          onContextMenu={ev => {
+            ev.preventDefault();
+            const header = [...document.getElementsByClassName("SkillFrame-header")]
+              .filter(x => x.innerText.toLowerCase() === className.toLowerCase())[0];
+
+            if (header) {
+              header.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+
+            return false;
+          }}
+          title={"Right-click to find facet table on the left"}
         >
           {index === 0 && "Start at "}
           {className}: {clsStats}

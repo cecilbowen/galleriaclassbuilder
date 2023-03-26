@@ -506,6 +506,26 @@ export const getFacetColor = facetName => {
   return Facets.colors[Facets.names.indexOf(facetName)] || "white";
 };
 
+export const generateBuildString = (facetName, skills, soulClarity) => {
+  const skillNumberStr = skills
+  .filter(x => x.name !== "")
+  .map(x => getSkillNumberByName(x.name))
+  .join("-");
+
+  const clarity = isNaN(soulClarity) ? 1 : soulClarity;
+  return `${getFacetNumber(facetName)}_${skillNumberStr}_${clarity}`;
+};
+
+export const isJsonString = str => {
+  try {
+      JSON.parse(str);
+  } catch (e) {
+      return false;
+  }
+
+  return true;
+};
+
 export const newSkill = (name, description, innate, color) => {
   return {
     name: name || "",
