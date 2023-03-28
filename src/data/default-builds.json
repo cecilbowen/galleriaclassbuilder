@@ -19,5 +19,12 @@
         "facet": "Wonder Viande",
         "build": "21_69-276-322-323-143-240-254-319-320-333-267-68-315-135-136-274-281_1",
         "description": "A stun build best used in the Thundering Pact that boosts Wonder Viande stats."
+    },
+    {
+        "id": 3,
+        "name": "Lamp STR Smasher",
+        "facet": "Aster Crow",
+        "build": "1_207-195-196-197-204-208-202-20-15-16-60-72-68-241-244-8-42_1",
+        "description": "An offensive Aster Crow build utilizing beneficial STR boosts alongside the double lamp attack stats."
     }
 ]

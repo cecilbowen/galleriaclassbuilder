@@ -3,10 +3,10 @@ x add a "now that you've gotten all the skills you want, you need to soul transf
   class X number of times to have enough skill points to use all your desired skills" indicator on
   skill point screen
 click on facet names from left tables to "quick change" target facet (so don't have to cycle to get to it)
-clean up ui
+x clean up ui
 clean up code (comments, using maps when cleaner to use arrays, etc)
-correct skill mistranslations by updating the correctedDescription fields (https://redd.it/11j57pf)
-add a new "Mode: Automatic" that chooses the best facet for the skills you've chosen (least amount of skill cost)
-add "initialCost" and "classCost" fields to all skills to account for some skill discount discrepancies
-figure out variance in level of learned skills post soul transfer
+x correct skill mistranslations by updating the correctedDescription fields (https://redd.it/11j57pf)
 x make sure alt classes with innate skill are ordered correctly AFTER other < level 99 soul transfer classes in the route
+add a new "Mode: Automatic" that chooses the best facet for the skills you've chosen (least amount of skill cost)
+add skill CLASS discount costs for the remaining 3 skills (cost 28, 53 and 70 skills) in skill-cost.json
+figure out what level skills are learned for each facet, and if any level variance exists post-soul transfer

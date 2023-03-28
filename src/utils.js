@@ -1,5 +1,6 @@
 import * as Facets from "./facets";
 import SKILLS from "./data/skills.json";
+import SKILL_COST from "./data/skill-cost.json";
 
 export const SKILL_LEARN_LEVELS = [
   0, 0, 4, 8, 12, 17, 22, 28, 34, 41, 48, 56, 63, 72, 81
@@ -120,6 +121,13 @@ export const getSkillDiscountedCost = (cost, discountType) => {
       break;
   }
 
+  const setCost = SKILL_COST[`${cost}`][discountType];
+
+  if (setCost) {
+    return setCost;
+  }
+
+  // only returns this if set skill not set in skill-cost.json yet
   return Math.round(cost * (1 - discount));
 };
 

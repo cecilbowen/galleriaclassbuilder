@@ -91,6 +91,12 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    if (seeBrowser) {
+      setFilterString("");
+    }
+  }, [seeBrowser]);
+
+  useEffect(() => {
     const tempBuild = {
       ...myBuild,
       efficient: efficient

@@ -163,7 +163,7 @@ const Directions = ({ hide, steps }) => {
     const rawSkill = getSkillByName(skill.name);
     const color = skill.checked ? "#fff1a9" : "white";
     const tags = rawSkill.tags.map(x => `${x.join(" ")}`);
-    const title = `${rawSkill.facet}: [${tags}] ${rawSkill.description}`;
+    const title = `(${rawSkill.cost}) ${rawSkill.facet}: [${tags}] ${rawSkill.description}`;
 
     return (
       <div key={`skill-table-${index}`} className="SkillFrame SkillPointTableItem" title={title}>
