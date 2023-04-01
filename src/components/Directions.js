@@ -228,6 +228,9 @@ const Directions = ({ hide, steps }) => {
       subGoal = `Transfers Needed: ${subGoals.join(" + ")}`;
     }
 
+    // sort skills in check table alphabetically
+    const abcSkills = skills.slice(0).sort((a, b) => a.name.localeCompare(b.name));
+
     return (
       <div className="SkillPointDisplay">
         <div style={{ color: 'white' }}>
@@ -245,7 +248,7 @@ const Directions = ({ hide, steps }) => {
             className="Star">★</span>
         </div>
         <div className="SkillPointTable">
-          {skills.map((x, i) => renderSkillTableRow(x, i))}
+          {abcSkills.map((x, i) => renderSkillTableRow(x, i))}
         </div>
       </div>
     );
