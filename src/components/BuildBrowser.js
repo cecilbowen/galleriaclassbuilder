@@ -66,7 +66,9 @@ const BuildBrowser = ({ currentFacet, currentSkills, currentSoulClarity, onClose
         const tempBuilds = builds.slice(0);
         for (const b of tempBuilds) {
             if (b.id === build.id) {
-                b.build = build.build;
+                const newBuild = generateBuildString(currentFacet, currentSkills, currentSoulClarity);
+                b.build = newBuild;
+                b.facet = currentFacet;
             }
         }
         setBuilds(tempBuilds);
