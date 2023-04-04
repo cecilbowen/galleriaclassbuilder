@@ -36,7 +36,7 @@ const MusicButton = props => {
         min={"0"}
         step={"0.05"}
         onChange={ev => setVolume(ev.currentTarget.value)}
-        style={{ verticalAlign: "top", marginLeft: "1em", width: "7em", cursor: "pointer" }}
+        style={{ verticalAlign: "top", marginLeft: "1em", width: "14em", cursor: "pointer" }}
       />
     </div>
   );

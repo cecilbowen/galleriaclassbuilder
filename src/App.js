@@ -315,6 +315,9 @@ export default function App() {
     );
   };
 
+  const toggleClass = myBuild.skills.length > 0 && !seeDirections ? "ToggleButtonAnim" : "ToggleButton";
+  const toggleTitle = seeDirections ? "Back to build edit view" : "Toggle to build route view";
+
   return (
     <div className="App">
       {!seeBrowser && renderFilter()}
@@ -341,7 +344,8 @@ export default function App() {
       {<CharacterPortrait facetName={myBuild.facet} />}
       <div className="ButtonsDiv">
         <button
-          className="ToggleButton"
+          title={toggleTitle}
+          className={toggleClass}
           onClick={() => setSeeDirections(!seeDirections)}
           style={{
             backgroundColor: "#dcfcd4",
@@ -396,7 +400,9 @@ export default function App() {
           Clear Skills
         </button>
         <MusicButton />
-        <small><a style={{ color: "aqua" }} href="https://github.com/cecilbowen/galleriaclassbuilder">Source Code</a></small>
+        <small><a style={{ color: "aqua" }} target="_blank" rel="noreferrer"
+          href="https://github.com/cecilbowen/galleriaclassbuilder">Source Code</a></small>
+        <small><a style={{ color: "aqua" }} target="_blank" rel="noreferrer" href="https://redd.it/11d7jks">Help</a></small>
       </div>
     </div>
   );

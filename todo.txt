@@ -10,3 +10,4 @@ x make sure alt classes with innate skill are ordered correctly AFTER other < le
 add a new "Mode: Automatic" that chooses the best facet for the skills you've chosen (least amount of skill cost)
 add skill CLASS discount costs for the remaining 3 skills (cost 28, 53 and 70 skills) in skill-cost.json
 figure out what level skills are learned for each facet, and if any level variance exists post-soul transfer
+update skill names/descriptions to match the game's recent translation fix patch
