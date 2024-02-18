@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 const URL =
-  "https://vgmsite.com/soundtracks/coven-and-labyrinth-of-galleria-original-soundtrack/aotwhqkkkz/2-12%20Curio%20Gallery.mp3";
+  "https://delta.vgmsite.com/soundtracks/coven-and-labyrinth-of-galleria-original-soundtrack/ujqqbirtmy/2-12%20Curio%20Gallery.mp3";
 
 const MusicButton = props => {
   const [audio, ] = useState(new Audio(URL));
